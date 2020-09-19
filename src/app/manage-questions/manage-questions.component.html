@@ -1,0 +1,58 @@
+<div *ngIf="questionData">
+    <mat-card class="p-4 mb-3" *ngFor="let data of questionData, let i = index" (click)="matCardClicked(data)"
+        [ngClass]="{'border-active': data.readonly === false}">
+        <div class="row" *ngIf="!data.readonly">
+            <div class="col-sm-7">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Question</mat-label>
+                    <input matInput [(ngModel)]="data.question">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-5">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Question Type</mat-label>
+                    <mat-select matNativeControl [(ngModel)]="data.questionType">
+                        <mat-option value="1"><i class="fa fa-circle mr-2"></i>Multiple Choice</mat-option>
+                        <mat-option value="2"><i class="fa fa-check-square mr-2"></i>Checkbox</mat-option>
+                        <mat-option value="3"><i class="fa fa-caret-down mr-2"></i>Dropdown</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="data.readonly">
+            <div class="col-sm-12">
+                <h3 class="m-0">{{i+1}}. {{data.question.trim() || 'Question'}} </h3>
+            </div>
+        </div>
+
+        <div [ngSwitch]="data.questionType">
+            <question-multiple-choice *ngSwitchCase="1" [data]="data">
+            </question-multiple-choice>
+            <question-checkbox *ngSwitchCase="2" [data]="data"></question-checkbox>
+        </div>
+
+        <mat-divider *ngIf="!data.readonly"></mat-divider>
+
+        <div class="row justify-content-between pt-4" *ngIf="!data.readonly">
+            <div class="col-sm-6">
+                <button mat-stroked-button color="primary" matTooltip="Answer key and points" class="p-0 pl-2 pr-2" (click)="addQuestion()">
+                    <mat-icon>add_circle_outline</mat-icon>
+                    Add Question
+                </button>
+                <span class="ml-4">( {{data.points}} Points)</span>
+            </div>
+            <div class="col-sm-6">
+                <button mat-icon-button color="basic" class="float-right" matTooltip="Delete Question"
+                    (click)="deleteQuestion(data.id)">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
+                <mat-slide-toggle color="primary" class="pt-2 float-right mr-3" [checked]="data.required">Required
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <div class="text-right" *ngIf="data.readonly">
+            <span class="text-secondary">2 Points</span>
+        </div>
+    </mat-card>
+</div>
