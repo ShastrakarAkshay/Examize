@@ -78,7 +78,7 @@ export class QuestionBankComponent implements OnInit {
   }
 
   private _initializeQuesitonBank() {
-    let emptyQuestion = {
+    const emptyQuestion: IQuestionBank = {
       id: new Date(),
       question: '',
       questionType: 1,
@@ -93,7 +93,7 @@ export class QuestionBankComponent implements OnInit {
     }
   }
 
-  editQuestion(data) {
+  editQuestion(data: IQuestionBank) {
     if (!data.readonly) {
       return;
     }
@@ -125,7 +125,7 @@ export class QuestionBankComponent implements OnInit {
     this.questionBank.splice(index + 1, 0, newQuestion);
   }
 
-  addMarks(id) {
+  addMarks(id: any) {
     this.questionBank.forEach(item => {
       if (item.id === id) {
         item.points = item.points + 1;
@@ -134,7 +134,7 @@ export class QuestionBankComponent implements OnInit {
 
   }
 
-  minusMarks(id) {
+  minusMarks(id: any) {
     this.questionBank.forEach(item => {
       if (item.id === id && item.points !== 0) {
         item.points = item.points - 1;

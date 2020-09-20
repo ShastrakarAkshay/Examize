@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import { IQuestionBank } from 'src/app/question-bank/interface/question-bank.interface';
 
 @Component({
   selector: 'question-multiple-choice',
@@ -8,7 +9,7 @@ import * as _ from 'lodash';
 })
 export class MultipleChoiceComponent implements OnInit {
 
-  @Input() data: any;
+  @Input() data: IQuestionBank;
 
   constructor() {}
   ngOnInit(): void {
@@ -21,7 +22,7 @@ export class MultipleChoiceComponent implements OnInit {
     this.data.options.push({ id: new Date(), name: '' });
   }
 
-  removeOption(optionId) {
+  removeOption(optionId: any) {
     this.data.options = _.remove(this.data.options, (item) => item.id !== optionId);
   }
 
