@@ -74,6 +74,23 @@ export class ManageQuestionsComponent implements OnInit {
         readonly: true
       }
     ];
+    if(!_.size(this.questionData)){
+      this.initializeQuesitonBank();
+    }
+  }
+
+  initializeQuesitonBank() {
+    let emptyQuestion =  {
+      id: new Date(),
+      question: '',
+      questionType: 1,
+      options: [],
+      answerKey: [],
+      points: 0,
+      required: false,
+      readonly: false
+    }
+    this.questionData.push(emptyQuestion);
   }
 
   matCardClicked(data) {
@@ -87,6 +104,9 @@ export class ManageQuestionsComponent implements OnInit {
 
   deleteQuestion(questionId: any) {
     this.questionData = _.remove(this.questionData, (item) => item.id !== questionId);
+    if(!_.size(this.questionData)){
+      this.initializeQuesitonBank();
+    }
   }
 
 
