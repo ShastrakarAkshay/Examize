@@ -1,6 +1,7 @@
 import { isNgTemplate, ReadPropExpr } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import { CQuestionTypes } from '../question-types/question-type.constant';
 import { IQuestionBank, IQuestionOptions } from './interface/question-bank.interface';
 
 @Component({
@@ -11,6 +12,7 @@ import { IQuestionBank, IQuestionOptions } from './interface/question-bank.inter
 export class QuestionBankComponent implements OnInit {
 
   questionBank: IQuestionBank[];
+  questionType = CQuestionTypes;
 
   constructor() { }
 
@@ -110,7 +112,7 @@ export class QuestionBankComponent implements OnInit {
 
   addQuestion(index: number) {
     const newQuestion = {
-      id: new Date(),
+      id: Date.now(),
       question: '',
       questionType: 1,
       options: [],
@@ -140,6 +142,16 @@ export class QuestionBankComponent implements OnInit {
         item.points = item.points - 1;
       }
     })
+  }
+
+  submit() {
+    // remove question that has blank question name
+    const filteredQuestions = this.questionBank.filter(item => item.question.trim() !== "");
+    //remove options that has blank option name
+    const questionData = filteredQuestions.map(item => {
+      return { ...item, options: item.options.filter(option => option.name.trim() !== "") }
+    })
+    console.log(questionData)
   }
 
 }

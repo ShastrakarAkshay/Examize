@@ -1,5 +1,5 @@
-export const QuestionType = {
-    1: 'Multiple Choice',
-    2: 'Checkbox',
-    3: 'Dropdown'
-}
+export const CQuestionTypes = [
+    { id: 1, name: 'Multiple Choice' },
+    { id: 2, name: 'Checkbox' },
+    { id: 3, name: 'Dropdown' }
+]

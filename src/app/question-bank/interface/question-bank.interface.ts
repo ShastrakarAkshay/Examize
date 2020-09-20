@@ -2,7 +2,7 @@
 export interface IQuestionBank{
     id: any;
     question: string;
-    questionType: any;
+    questionType: number;
     options: IQuestionOptions[];
     answerKey: any,
     points: number;

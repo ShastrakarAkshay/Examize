@@ -19,11 +19,12 @@ export class MultipleChoiceComponent implements OnInit {
   }
 
   addOption() {
-    this.data.options.push({ id: new Date(), name: '' });
+    this.data.options.push({ id: Date.now(), name: '' });
   }
 
   removeOption(optionId: any) {
     this.data.options = _.remove(this.data.options, (item) => item.id !== optionId);
+    this.data.answerKey = this.data.answerKey.filter((key) => key !== optionId);
   }
 
 }
