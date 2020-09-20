@@ -4,10 +4,10 @@
             <mat-radio-group>
                 <mat-checkbox color="primary" class="mt-3" [checked]="data.answerKey.includes(option.id)" (change)="addAnswerKeys($event, option.id)"></mat-checkbox>
             </mat-radio-group>
-            <mat-form-field class="ml-3 w-90">
+            <mat-form-field class="ml-3 w-90 option-input">
                 <input matInput [(ngModel)]="option.name">
             </mat-form-field>
-            <button mat-icon-button color="basic" class="float-right" matTooltip="Remove" (click)="removeOption(option.id)">
+            <button mat-icon-button color="basic" class="float-right btn-hover" matTooltip="Remove" (click)="removeOption(option.id)">
                 <mat-icon>close</mat-icon>
             </button>
         </div>

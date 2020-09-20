@@ -34,25 +34,33 @@
 
         <mat-divider *ngIf="!data.readonly"></mat-divider>
 
-        <div class="row justify-content-between pt-4" *ngIf="!data.readonly">
-            <div class="col-sm-6">
-                <button mat-stroked-button color="primary" matTooltip="Answer key and points" class="p-0 pl-2 pr-2" (click)="addQuestion()">
+        <div class="row justify-content-between pt-4 pl-3 pr-3" *ngIf="!data.readonly">
+            <div class="col-xs-7">
+                <button mat-stroked-button color="primary" matTooltip="Answer key and points" class="p-0 pl-2 pr-2"
+                    (click)="addQuestion()">
                     <mat-icon>add_circle_outline</mat-icon>
-                    Add Question
+                    <span class="m-hide ml-1">Add Question</span>
                 </button>
-                <span class="ml-4">( {{data.points}} Points)</span>
+                <button mat-icon-button color="basic" class="btn-hover ml-3" (click)="minusMarks(data.id)">
+                    <mat-icon>remove_circle</mat-icon>
+                </button>
+                <span class="font-weight-bold">{{data.points}} <span class="m-hide">Marks</span></span>
+                <button mat-icon-button color="basic" class="btn-hover" (click)="addMarks(data.id)">
+                    <mat-icon>add_circle</mat-icon>
+                </button>
             </div>
-            <div class="col-sm-6">
-                <button mat-icon-button color="basic" class="float-right" matTooltip="Delete Question"
+            <div class="col-xs-5">
+                <button mat-icon-button color="basic" class="btn-hover float-right" matTooltip="Delete Question"
                     (click)="deleteQuestion(data.id)">
                     <mat-icon>delete_outline</mat-icon>
                 </button>
-                <mat-slide-toggle color="primary" class="pt-2 float-right mr-3" [checked]="data.required">Required
+                <mat-slide-toggle color="primary" class="pt-2 float-right mr-3" [checked]="data.required" matTooltip="Required">
+                    <span class="m-hide">Required</span>
                 </mat-slide-toggle>
             </div>
         </div>
         <div class="text-right" *ngIf="data.readonly">
-            <span class="text-secondary">2 Points</span>
+            <span class="text-secondary">{{data.points}} Marks</span>
         </div>
     </mat-card>
 </div>

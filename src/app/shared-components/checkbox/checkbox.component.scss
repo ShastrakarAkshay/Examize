@@ -9,3 +9,10 @@ mat-checkbox ::ng-deep .mat-checkbox-inner-container {
     margin: 15px 0;
 }
 
+@media only screen and (max-width: 992px) {
+    // for mobile devices and tabs
+    .option-input {
+        width: 70%;
+    }
+}
+

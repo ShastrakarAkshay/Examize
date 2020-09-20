@@ -81,12 +81,7 @@ export class ManageQuestionsComponent implements OnInit {
       return;
     }
     this.questionData.forEach(item => {
-      if (item.id !== data.id) {
-        item.readonly = true;
-      }
-      if (item.id === data.id) {
-        item.readonly = false;
-      }
+      item.readonly = item.id === data.id ? false : true;
     })
   }
 
@@ -110,6 +105,23 @@ export class ManageQuestionsComponent implements OnInit {
       return { ...item, readonly: true }
     })
     this.questionData.push(newQuestion);
+  }
+
+  addMarks(id) {
+    this.questionData.forEach(item => {
+      if (item.id === id) {
+        item.points = item.points + 1;
+      }
+    })
+
+  }
+
+  minusMarks(id) {
+    this.questionData.forEach(item => {
+      if (item.id === id && item.points !== 0) {
+        item.points = item.points - 1;
+      }
+    })
   }
 
 }

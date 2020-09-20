@@ -4,10 +4,10 @@
             <mat-radio-group [(ngModel)]="data.answerKey[0]">
                 <mat-radio-button color="primary" [value]="option.id"> </mat-radio-button>
             </mat-radio-group>
-            <mat-form-field class="ml-2 w-90">
+            <mat-form-field class="ml-2 w-90 option-input">
                 <input matInput [(ngModel)]="option.name">
             </mat-form-field>
-            <button mat-icon-button color="basic" class="float-right" matTooltip="Remove" (click)="removeOption(option.id)">
+            <button mat-icon-button color="basic" class="float-right btn-hover" matTooltip="Remove" (click)="removeOption(option.id)">
                 <mat-icon>close</mat-icon>
             </button>
         </div>

@@ -1,7 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 .w-50 {
     width: 50%;
 }
@@ -21,4 +27,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 100%;
 }
 
-:focus {outline:0 !important;}
+:focus {
+    outline: 0 !important;
+}
+
+@media only screen and (max-width: 768px) {
+    // for mobile devices
+    .m-hide {
+        display: none;
+    }
+}
+
+.btn-hover:hover {
+    background-color: #ececec;;
+}
