@@ -1,5 +1,5 @@
-<div *ngIf="questionData">
-    <mat-card class="p-4 mb-3" *ngFor="let data of questionData, let i = index" (click)="matCardClicked(data)"
+<div *ngIf="questionBank">
+    <mat-card class="p-4 mb-3" *ngFor="let data of questionBank, let i = index" (click)="editQuestion(data)"
         [ngClass]="{'border-active': data.readonly === false}">
         <div class="row" *ngIf="!data.readonly">
             <div class="col-sm-7">
@@ -37,7 +37,7 @@
         <div class="row justify-content-between pt-4 pl-3 pr-3" *ngIf="!data.readonly">
             <div class="col-xs-7">
                 <button mat-stroked-button color="primary" matTooltip="Add new question" class="p-0 pl-2 pr-2"
-                    (click)="addQuestion()">
+                    (click)="addQuestion(i)">
                     <mat-icon>add_circle_outline</mat-icon>
                     <span class="m-hide ml-1">Add Question</span>
                 </button>

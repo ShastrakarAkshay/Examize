@@ -1,21 +1,21 @@
 import { isNgTemplate, ReadPropExpr } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
-import { IQuestionType } from '../interface/question-type.interface';
 import * as _ from 'lodash';
+import { IQuestionBank, IQuestionOptions } from './interface/question-bank.interface';
 
 @Component({
-  selector: 'app-manage-questions',
-  templateUrl: './manage-questions.component.html',
-  styleUrls: ['./manage-questions.component.scss']
+  selector: 'app-question-bank',
+  templateUrl: './question-bank.component.html',
+  styleUrls: ['./question-bank.component.scss']
 })
-export class ManageQuestionsComponent implements OnInit {
+export class QuestionBankComponent implements OnInit {
 
-  questionData: IQuestionType[];
+  questionBank: IQuestionBank[];
 
   constructor() { }
 
   ngOnInit(): void {
-    this.questionData = [
+    this.questionBank = [
       {
         id: 10001,
         question: 'Who is PM of inida?',
@@ -74,13 +74,11 @@ export class ManageQuestionsComponent implements OnInit {
         readonly: true
       }
     ];
-    if(!_.size(this.questionData)){
-      this.initializeQuesitonBank();
-    }
+    this._initializeQuesitonBank();
   }
 
-  initializeQuesitonBank() {
-    let emptyQuestion =  {
+  private _initializeQuesitonBank() {
+    let emptyQuestion = {
       id: new Date(),
       question: '',
       questionType: 1,
@@ -90,27 +88,27 @@ export class ManageQuestionsComponent implements OnInit {
       required: false,
       readonly: false
     }
-    this.questionData.push(emptyQuestion);
+    if (!_.size(this.questionBank)) {
+      this.questionBank.push(emptyQuestion);
+    }
   }
 
-  matCardClicked(data) {
+  editQuestion(data) {
     if (!data.readonly) {
       return;
     }
-    this.questionData.forEach(item => {
+    this.questionBank.forEach(item => {
       item.readonly = item.id === data.id ? false : true;
     })
   }
 
   deleteQuestion(questionId: any) {
-    this.questionData = _.remove(this.questionData, (item) => item.id !== questionId);
-    if(!_.size(this.questionData)){
-      this.initializeQuesitonBank();
-    }
+    this.questionBank = _.remove(this.questionBank, (item) => item.id !== questionId);
+    this._initializeQuesitonBank();
   }
 
 
-  addQuestion() {
+  addQuestion(index: number) {
     const newQuestion = {
       id: new Date(),
       question: '',
@@ -121,14 +119,14 @@ export class ManageQuestionsComponent implements OnInit {
       required: false,
       readonly: false
     }
-    this.questionData = this.questionData.map(item => {
+    this.questionBank = this.questionBank.map(item => {
       return { ...item, readonly: true }
     })
-    this.questionData.push(newQuestion);
+    this.questionBank.splice(index + 1, 0, newQuestion);
   }
 
   addMarks(id) {
-    this.questionData.forEach(item => {
+    this.questionBank.forEach(item => {
       if (item.id === id) {
         item.points = item.points + 1;
       }
@@ -137,7 +135,7 @@ export class ManageQuestionsComponent implements OnInit {
   }
 
   minusMarks(id) {
-    this.questionData.forEach(item => {
+    this.questionBank.forEach(item => {
       if (item.id === id && item.points !== 0) {
         item.points = item.points - 1;
       }

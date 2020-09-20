@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CheckboxComponent } from './shared-components/checkbox/checkbox.component';
+import { CheckboxComponent } from './question-types/checkbox/checkbox.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -17,9 +17,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ManageQuestionsComponent } from './manage-questions/manage-questions.component';
-import { MultipleChoiceComponent } from './shared-components/multiple-choice/multiple-choice.component';
+import { MultipleChoiceComponent } from './question-types/multiple-choice/multiple-choice.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { QuestionBankComponent } from './question-bank/question-bank.component';
 
 const MaterialModules = [
   MatCheckboxModule,
@@ -36,11 +36,13 @@ const MaterialModules = [
   MatTooltipModule
 ]
 
+const FirebaseModules = [];
+
 @NgModule({
   declarations: [
     AppComponent,
     CheckboxComponent,
-    ManageQuestionsComponent,
+    QuestionBankComponent,
     MultipleChoiceComponent
   ],
   imports: [
@@ -49,7 +51,8 @@ const MaterialModules = [
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    ...MaterialModules
+    ...MaterialModules,
+    ...FirebaseModules
   ],
   providers: [],
   bootstrap: [AppComponent]
