@@ -23,7 +23,7 @@ export class QuestionBankComponent implements OnInit {
     this.questionBank = [
       {
         id: 10001,
-        question: 'Who is PM of inida?',
+        question: 'Who is PM of india?',
         questionType: 1, // 1. multiple choice 2. checkbox etc
         options: [
           {
@@ -166,7 +166,7 @@ export class QuestionBankComponent implements OnInit {
   submit() {
     // remove question that has blank question name
     const filteredQuestions = this.questionBank.filter(item => item.question.trim() !== "");
-    //remove options that has blank option name
+    // remove options that has blank option name
     const questionData = filteredQuestions.map(item => {
       return { ...item, options: item.options.filter(option => option.name.trim() !== "") }
     })
@@ -177,7 +177,11 @@ export class QuestionBankComponent implements OnInit {
       settings: {
         shuffleQuestions: true,
         negativeMarking: {},
-        showResultToParticipants: false
+        showResultToParticipants: false,
+        quizTimer: {
+          status: false,
+          duration: 120
+        }
       }
     }
     console.log(quiz)

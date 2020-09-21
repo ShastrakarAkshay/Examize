@@ -26,4 +26,10 @@ export interface IQuizSettings {
     shuffleQuestions: boolean;
     negativeMarking: any;
     showResultToParticipants: boolean;
+    quizTimer: IQuizTimer;
+}
+
+export interface IQuizTimer {
+    status: boolean;
+    duration: number; // minutes
 }

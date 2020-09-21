@@ -1,29 +1,32 @@
-<div *ngIf="questionBank" class="question-cards">
-    <mat-card class="p-4 mb-5 border-active header-card" (click)="editHeader()">
+<div *ngIf="questionBank" class="app-quiz-cards">
+    <mat-card class="p-4 mb-5 mat-card-active quiz-header" (click)="editHeader()">
         <div *ngIf="!readonly">
-            <mat-form-field appearance="fill" class="w-100 header-name mt-3">
+            <mat-form-field appearance="fill" class="w-100 quiz-name mt-3">
                 <mat-label>Quiz Name</mat-label>
-                <input matInput [(ngModel)]="quizName">
+                <input matInput [(ngModel)]="quizName" class="text-capitalize">
             </mat-form-field>
             <mat-form-field appearance="fill" class="w-100">
                 <mat-label>Description</mat-label>
-                <input matInput [(ngModel)]="quizDescription">
+                <input matInput [(ngModel)]="quizDescription" class="text-capitalize">
             </mat-form-field>
         </div>
         <div *ngIf="readonly">
-            <p class="mt-3 header-name">{{quizName || 'Blank Quiz'}}</p>
-            <p class="mt-3 text-secondary">{{quizDescription || 'Description'}}</p>
-            <div class="row mt-5 text-secondary">
-                <div class="col-sm-6">Total Question : <span class="font-weight-bold">{{questionBank.length}}</span>
+            <p class="mt-3 quiz-name text-capitalize">{{quizName || 'Blank Quiz'}}</p>
+            <p class="mt-3 mb-4 text-secondary text-capitalize">{{quizDescription || 'Description'}}</p>
+            <mat-divider></mat-divider>
+            <div class="row mt-5 justify-content-between pl-3 pr-3 text-secondary">
+                <div class="col-xs-6">Total Question : <span class="font-weight-bold">{{questionBank.length}}</span>
                 </div>
-                <div class="col-sm-6 text-right">
-                    Total Marks : <span class="font-weight-bold">{{calculateTotalMarks()}}</span>
+                <div class="col-xs-6">
+                    <span class="float-right">
+                        Total Marks : <span class="font-weight-bold">{{calculateTotalMarks()}}</span>
+                    </span>
                 </div>
             </div>
         </div>
     </mat-card>
     <mat-card class="p-4 mb-3" *ngFor="let data of questionBank, let i = index" (click)="editQuestion(data)"
-        [ngClass]="{'border-active': data.readonly === false}">
+        [ngClass]="{'mat-card-active': data.readonly === false}">
         <div class="row question-header" *ngIf="!data.readonly">
             <div class="col-sm-7">
                 <mat-form-field appearance="fill" class="w-100">
