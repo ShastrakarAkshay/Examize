@@ -23,5 +23,12 @@
         .question-header {
             font-size: 18px;
         }
+        .invalid-question {
+            position: absolute;
+            font-size: 13px;
+            color: #da1010;
+            top: 10px;
+            cursor: pointer;
+        }
     }
 }

@@ -33,6 +33,9 @@ export class QuestionBankComponent implements OnInit {
           {
             id: 2,
             name: 'Lalu Yadav'
+          },{
+            id: 3,
+            name: ' '
           }
         ],
         answerKey: [1],
@@ -161,6 +164,14 @@ export class QuestionBankComponent implements OnInit {
       totalMarks = totalMarks + item.points;
     })
     return totalMarks;
+  }
+
+  isQuestionValid(data: IQuestionBank): boolean {
+    const invalidOptions = data.options.filter(option => option.name.trim() === "")
+    if (data.question.trim() === "" || _.size(invalidOptions)) {
+      return true;
+    }
+    return false;
   }
 
   submit() {
