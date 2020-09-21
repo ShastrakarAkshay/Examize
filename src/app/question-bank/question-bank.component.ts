@@ -14,8 +14,8 @@ export class QuestionBankComponent implements OnInit {
   questionBank: IQuestionBank[];
   questionType = CQuestionTypes;
   readonly: boolean = true;
-  quizName: string;
-  quizDescription: string;
+  quizName: string = "";
+  quizDescription: string = "";
 
   constructor() { }
 
@@ -33,7 +33,7 @@ export class QuestionBankComponent implements OnInit {
           {
             id: 2,
             name: 'Lalu Yadav'
-          },{
+          }, {
             id: 3,
             name: ' '
           }
@@ -196,6 +196,11 @@ export class QuestionBankComponent implements OnInit {
       }
     }
     console.log(quiz)
+  }
+
+  startsOver() {
+    this.questionBank = [];
+    this._initializeQuesitonBank();
   }
 
 }

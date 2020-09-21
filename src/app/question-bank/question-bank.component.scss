@@ -1,6 +1,4 @@
 .app-quiz-cards {
-    overflow-x: auto;
-    overflow-y: hidden;
     margin-bottom: 100px;
     .quiz-header {
         .quiz-name {
@@ -31,4 +29,17 @@
             cursor: pointer;
         }
     }
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    .footer-card {
+        margin-left: 26%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+  .footer-card {
+    margin-left: 12% !important;
+  }
 }
