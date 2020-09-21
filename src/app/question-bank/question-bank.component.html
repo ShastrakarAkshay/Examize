@@ -1,7 +1,30 @@
-<div *ngIf="questionBank">
+<div *ngIf="questionBank" class="question-cards">
+    <mat-card class="p-4 mb-5 border-active header-card" (click)="editHeader()">
+        <div *ngIf="!readonly">
+            <mat-form-field appearance="fill" class="w-100 header-name mt-3">
+                <mat-label>Quiz Name</mat-label>
+                <input matInput [(ngModel)]="quizName">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Description</mat-label>
+                <input matInput [(ngModel)]="quizDescription">
+            </mat-form-field>
+        </div>
+        <div *ngIf="readonly">
+            <p class="mt-3 header-name">{{quizName || 'Blank Quiz'}}</p>
+            <p class="mt-3 text-secondary">{{quizDescription || 'Description'}}</p>
+            <div class="row mt-5 text-secondary">
+                <div class="col-sm-6">Total Question : <span class="font-weight-bold">{{questionBank.length}}</span>
+                </div>
+                <div class="col-sm-6 text-right">
+                    Total Marks : <span class="font-weight-bold">{{calculateTotalMarks()}}</span>
+                </div>
+            </div>
+        </div>
+    </mat-card>
     <mat-card class="p-4 mb-3" *ngFor="let data of questionBank, let i = index" (click)="editQuestion(data)"
         [ngClass]="{'border-active': data.readonly === false}">
-        <div class="row" *ngIf="!data.readonly">
+        <div class="row question-header" *ngIf="!data.readonly">
             <div class="col-sm-7">
                 <mat-form-field appearance="fill" class="w-100">
                     <mat-label>Question</mat-label>
@@ -13,7 +36,7 @@
                     <mat-label>Question Type</mat-label>
                     <mat-select matNativeControl [(ngModel)]="data.questionType">
                         <mat-option *ngFor="let option of questionType" [value]="option.id">
-                            <i class="fa mr-2" [ngClass]="{'fa-circle': option.id === 1, 'fa-check-square': option.id === 2, 'fa-caret-down': option.id === 3}"></i>
+                            <i class="mr-2" [ngClass]="option.iconClass"></i>
                             {{option.name}}
                         </mat-option>
                     </mat-select>
@@ -54,8 +77,8 @@
                     (click)="deleteQuestion(data.id)">
                     <mat-icon>delete_outline</mat-icon>
                 </button>
-                <mat-slide-toggle color="primary" class="pt-2 float-right mr-3" [checked]="data.required" [(ngModel)]="data.required"
-                    matTooltip="Required">
+                <mat-slide-toggle color="primary" class="pt-2 float-right mr-3" [checked]="data.required"
+                    [(ngModel)]="data.required" matTooltip="Required">
                     <span class="m-hide">Required</span>
                 </mat-slide-toggle>
             </div>

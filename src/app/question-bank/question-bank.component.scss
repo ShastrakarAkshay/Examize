@@ -9,8 +9,7 @@
         0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
-.w-100 {
-    width: 100%;
+.question-header {
     font-size: 18px;
 }
 
@@ -20,7 +19,22 @@
         0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
+.question-cards {
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 100px;
+}
 
+.footer {
+    position: fixed;
+    bottom: 0;
+}
 
-
-
+.header-card {
+    .header-name {
+        font-size: 25px;
+    }
+    .header-description {
+        font-size: 18px;
+    }
+}

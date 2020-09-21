@@ -2,7 +2,7 @@ import { isNgTemplate, ReadPropExpr } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { CQuestionTypes } from '../question-types/question-type.constant';
-import { IQuestionBank, IQuestionOptions } from './interface/question-bank.interface';
+import { IQuestionBank, IQuestionOptions, IQuizModal } from './interface/question-bank.interface';
 
 @Component({
   selector: 'app-question-bank',
@@ -13,6 +13,9 @@ export class QuestionBankComponent implements OnInit {
 
   questionBank: IQuestionBank[];
   questionType = CQuestionTypes;
+  readonly: boolean = true;
+  quizName: string;
+  quizDescription: string;
 
   constructor() { }
 
@@ -96,12 +99,20 @@ export class QuestionBankComponent implements OnInit {
   }
 
   editQuestion(data: IQuestionBank) {
+    this.readonly = true;
     if (!data.readonly) {
       return;
     }
     this.questionBank.forEach(item => {
       item.readonly = item.id === data.id ? false : true;
     })
+  }
+
+  editHeader() {
+    if (!this.readonly) {
+      return;
+    }
+    this.readonly = false;
   }
 
   deleteQuestion(questionId: any) {
@@ -144,6 +155,14 @@ export class QuestionBankComponent implements OnInit {
     })
   }
 
+  calculateTotalMarks(): number {
+    let totalMarks = 0;
+    this.questionBank.forEach(item => {
+      totalMarks = totalMarks + item.points;
+    })
+    return totalMarks;
+  }
+
   submit() {
     // remove question that has blank question name
     const filteredQuestions = this.questionBank.filter(item => item.question.trim() !== "");
@@ -151,7 +170,17 @@ export class QuestionBankComponent implements OnInit {
     const questionData = filteredQuestions.map(item => {
       return { ...item, options: item.options.filter(option => option.name.trim() !== "") }
     })
-    console.log(questionData)
+    const quiz: IQuizModal = {
+      quizName: this.quizName,
+      quizDescription: this.quizDescription,
+      questions: questionData,
+      settings: {
+        shuffleQuestions: true,
+        negativeMarking: {},
+        showResultToParticipants: false
+      }
+    }
+    console.log(quiz)
   }
 
 }
