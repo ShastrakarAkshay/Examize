@@ -1,5 +1,5 @@
 <div *ngIf="questionBank" class="app-quiz-cards">
-    <mat-card class="p-4 mb-5 mat-card-active quiz-header" (click)="editHeader()">
+    <mat-card class="p-4 mb-5 mat-card-active quiz-header" (click)="readonly = false">
         <div *ngIf="!readonly">
             <mat-form-field appearance="fill" class="w-100 quiz-name mt-3">
                 <mat-label>Quiz Name</mat-label>
@@ -83,7 +83,7 @@
                     (click)="deleteQuestion(data.id)">
                     <mat-icon>delete_outline</mat-icon>
                 </button>
-                <mat-slide-toggle color="primary" class="pt-2 float-right mr-3" [checked]="data.required"
+                <mat-slide-toggle color="primary" class="pt-2 float-right mr-2" [checked]="data.required"
                     [(ngModel)]="data.required" matTooltip="Required">
                     <span class="m-hide">Required</span>
                 </mat-slide-toggle>

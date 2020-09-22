@@ -111,13 +111,6 @@ export class QuestionBankComponent implements OnInit {
     })
   }
 
-  editHeader() {
-    if (!this.readonly) {
-      return;
-    }
-    this.readonly = false;
-  }
-
   deleteQuestion(questionId: any) {
     this.questionBank = _.remove(this.questionBank, (item) => item.id !== questionId);
     this._initializeQuesitonBank();
@@ -168,7 +161,7 @@ export class QuestionBankComponent implements OnInit {
 
   isQuestionValid(data: IQuestionBank): boolean {
     const invalidOptions = data.options.filter(option => option.name.trim() === "")
-    if (data.question.trim() === "" || _.size(invalidOptions)) {
+    if (data.question.trim() === "" || _.size(invalidOptions) || !_.size(data.options)) {
       return true;
     }
     return false;
@@ -178,9 +171,14 @@ export class QuestionBankComponent implements OnInit {
     // remove question that has blank question name
     const filteredQuestions = this.questionBank.filter(item => item.question.trim() !== "");
     // remove options that has blank option name
-    const questionData = filteredQuestions.map(item => {
+    const filteredOptions = filteredQuestions.map(item => {
       return { ...item, options: item.options.filter(option => option.name.trim() !== "") }
     })
+    // @todo: remove answer key ids if options is removed
+
+    // remove question that has empty options array
+    const questionData = filteredOptions.filter(item => item.options.length > 0);
+
     const quiz: IQuizModal = {
       quizName: this.quizName,
       quizDescription: this.quizDescription,
