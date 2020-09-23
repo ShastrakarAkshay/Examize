@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +19,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MultipleChoiceComponent } from './question-types/multiple-choice/multiple-choice.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { QuestionBankComponent } from './question-bank/question-bank.component';
+import { QuestionBankComponent, QuestionBankSettings } from './question-bank/question-bank.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatListModule } from '@angular/material/list';
 
 const MaterialModules = [
   MatCheckboxModule,
@@ -33,7 +35,9 @@ const MaterialModules = [
   MatSnackBarModule,
   MatInputModule,
   MatIconModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatBottomSheetModule,
+  MatListModule
 ]
 
 const FirebaseModules = [];
@@ -43,7 +47,8 @@ const FirebaseModules = [];
     AppComponent,
     CheckboxComponent,
     QuestionBankComponent,
-    MultipleChoiceComponent
+    MultipleChoiceComponent,
+    QuestionBankSettings
   ],
   imports: [
     BrowserModule,
@@ -55,6 +60,7 @@ const FirebaseModules = [];
     ...FirebaseModules
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [QuestionBankSettings]
 })
 export class AppModule { }

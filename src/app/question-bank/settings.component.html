@@ -1,0 +1,41 @@
+<div class="pb-3 app-settings-panel">
+    <mat-list>
+        <div mat-subheader class="header"> 
+            <span>Settings</span>
+            <button mat-icon-button color="basic" class="btn-hover close-settings" (click)="closeSettings()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <mat-list-item>
+            <mat-icon mat-list-icon>shuffle</mat-icon>
+            <div mat-line>
+                Shuffle Question
+                <mat-slide-toggle color="primary" class="ml-2"> </mat-slide-toggle>
+            </div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon>remove_circle</mat-icon>
+            <div mat-line>
+                Negative Marking
+                <mat-slide-toggle color="primary" class="ml-2"> </mat-slide-toggle>
+            </div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon>text_snippet</mat-icon>
+            <div mat-line>
+                Show Result To Participants
+                <mat-slide-toggle color="primary" class="ml-2"> </mat-slide-toggle>
+            </div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon>access_time</mat-icon>
+            <div mat-line>
+                Timer
+                <mat-slide-toggle color="primary" class="ml-2"> </mat-slide-toggle>
+            </div>
+        </mat-list-item>
+    </mat-list>
+    <div class="pr-2 text-right">
+        <button mat-raised-button color="basic" class="">Save</button>
+    </div>
+</div>

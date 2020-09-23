@@ -1,5 +1,6 @@
 import { isNgTemplate, ReadPropExpr } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import * as _ from 'lodash';
 import { CQuestionTypes } from '../question-types/question-type.constant';
 import { IQuestionBank, IQuestionOptions, IQuizModal } from './interface/question-bank.interface';
@@ -17,7 +18,7 @@ export class QuestionBankComponent implements OnInit {
   quizName: string = "";
   quizDescription: string = "";
 
-  constructor() { }
+  constructor(private _matBottomSheet: MatBottomSheet) { }
 
   ngOnInit(): void {
     this.questionBank = [
@@ -199,6 +200,24 @@ export class QuestionBankComponent implements OnInit {
   startsOver() {
     this.questionBank = [];
     this._initializeQuesitonBank();
+  }
+
+  openSettings(){
+    this._matBottomSheet.open(QuestionBankSettings);
+  }
+
+}
+
+@Component({
+  selector: 'app-question-bank-settings',
+  templateUrl: './settings.component.html',
+  styleUrls: ['./question-bank.component.scss']
+})
+export class QuestionBankSettings {
+  constructor(private _bottomSheetRef: MatBottomSheetRef<QuestionBankSettings>) {}
+
+  closeSettings() {
+    this._bottomSheetRef.dismiss();
   }
 
 }
