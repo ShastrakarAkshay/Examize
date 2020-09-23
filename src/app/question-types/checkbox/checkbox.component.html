@@ -1,6 +1,6 @@
 <div class="row" *ngIf="data">
-    <div class="col-sm-12 pb-4" *ngIf="!data.readonly">
-        <div *ngFor="let option of data.options">
+    <div class="col-sm-12 pb-4" *ngIf="!data.readonly" cdkDropList (cdkDropListDropped)="dragDropOptions($event)">
+        <div *ngFor="let option of data.options" cdkDrag>
             <mat-radio-group>
                 <mat-checkbox color="primary" class="mt-3" [checked]="data.answerKey.includes(option.id)" (change)="addAnswerKeys($event, option.id)"></mat-checkbox>
             </mat-radio-group>

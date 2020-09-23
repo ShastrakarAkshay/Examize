@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { IQuestionBank } from 'src/app/question-bank/interface/question-bank.interface';
@@ -11,7 +12,7 @@ export class MultipleChoiceComponent implements OnInit {
 
   @Input() data: IQuestionBank;
 
-  constructor() {}
+  constructor() { }
   ngOnInit(): void {
     if (!_.size(this.data.options)) {
       this.addOption();
@@ -25,6 +26,10 @@ export class MultipleChoiceComponent implements OnInit {
   removeOption(optionId: any) {
     this.data.options = _.remove(this.data.options, (item) => item.id !== optionId);
     this.data.answerKey = this.data.answerKey.filter((key) => key !== optionId);
+  }
+
+  dragDropOptions(event: CdkDragDrop<any>) {
+    moveItemInArray(this.data.options, event.previousIndex, event.currentIndex);
   }
 
 }

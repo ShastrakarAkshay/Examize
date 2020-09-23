@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { isNgTemplate, ReadPropExpr } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -206,6 +207,10 @@ export class QuestionBankComponent implements OnInit {
     this._matBottomSheet.open(QuestionBankSettings);
   }
 
+  dragDropQuestion(event: CdkDragDrop<any>){
+    moveItemInArray(this.questionBank, event.previousIndex, event.currentIndex);
+  }
+
 }
 
 @Component({
@@ -214,6 +219,7 @@ export class QuestionBankComponent implements OnInit {
   styleUrls: ['./question-bank.component.scss']
 })
 export class QuestionBankSettings {
+
   constructor(private _bottomSheetRef: MatBottomSheetRef<QuestionBankSettings>) {}
 
   closeSettings() {

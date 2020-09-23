@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { IQuestionBank } from 'src/app/question-bank/interface/question-bank.interface';
@@ -34,6 +35,10 @@ export class CheckboxComponent implements OnInit {
     } else {
       this.data.answerKey = _.remove(this.data.answerKey, (item) => item !== id);
     }
+  }
+
+  dragDropOptions(event: CdkDragDrop<any>) {
+    moveItemInArray(this.data.options, event.previousIndex, event.currentIndex);
   }
 
 }

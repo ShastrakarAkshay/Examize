@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuestionBankComponent, QuestionBankSettings } from './question-bank/question-bank.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const MaterialModules = [
   MatCheckboxModule,
@@ -56,6 +57,7 @@ const FirebaseModules = [];
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    DragDropModule,
     ...MaterialModules,
     ...FirebaseModules
   ],
