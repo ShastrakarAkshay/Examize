@@ -2,7 +2,7 @@
     <mat-list>
         <div mat-subheader class="header"> 
             <span>Settings</span>
-            <button mat-icon-button color="basic" class="btn-hover close-settings" (click)="closeSettings()">
+            <button mat-icon-button color="basic" class="btn-hover close-settings" (click)="settingsDismiss()">
                 <mat-icon>close</mat-icon>
             </button>
         </div>
@@ -11,6 +11,17 @@
             <div mat-line>
                 Shuffle Question
                 <mat-slide-toggle color="primary" class="ml-2"> </mat-slide-toggle>
+            </div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon>access_time</mat-icon>
+            <div mat-line>
+                Timer
+                <mat-slide-toggle color="primary" class="ml-2" [(ngModel)]="settings.timer.status"> </mat-slide-toggle>
+                <mat-form-field appearance="fill" class="ml-4 minute-field" style="margin-top: 0.6rem;" *ngIf="settings.timer.status">
+                    <mat-label>Minuts</mat-label>
+                    <input matInput type="number" value="30" [(ngModel)]="settings.timer.duration">
+                </mat-form-field>
             </div>
         </mat-list-item>
         <mat-list-item>
@@ -23,19 +34,12 @@
         <mat-list-item>
             <mat-icon mat-list-icon>text_snippet</mat-icon>
             <div mat-line>
-                Show Result To Participants
-                <mat-slide-toggle color="primary" class="ml-2"> </mat-slide-toggle>
-            </div>
-        </mat-list-item>
-        <mat-list-item>
-            <mat-icon mat-list-icon>access_time</mat-icon>
-            <div mat-line>
-                Timer
+                Show Result
                 <mat-slide-toggle color="primary" class="ml-2"> </mat-slide-toggle>
             </div>
         </mat-list-item>
     </mat-list>
     <div class="pr-2 text-right">
-        <button mat-raised-button color="basic" class="">Save</button>
+        <button mat-raised-button color="basic" (click)="settingsDismiss()">Save</button>
     </div>
 </div>

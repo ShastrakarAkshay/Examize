@@ -25,8 +25,8 @@ export interface IQuizModal {
 export interface IQuizSettings {
     shuffleQuestions: boolean;
     negativeMarking: any;
-    showResultToParticipants: boolean;
-    quizTimer: IQuizTimer;
+    showResult: boolean;
+    timer: IQuizTimer;
 }
 
 export interface IQuizTimer {

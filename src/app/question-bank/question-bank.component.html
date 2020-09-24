@@ -1,22 +1,22 @@
 <div class="app-quiz-cards">
-    <div *ngIf="questionBank">
+    <div *ngIf="quizData.questions">
         <mat-card class="p-4 mat-card-active quiz-header" (click)="readonly = false">
             <div *ngIf="!readonly">
                 <mat-form-field appearance="fill" class="w-100 quiz-name mt-3">
                     <mat-label>Quiz Name</mat-label>
-                    <input matInput [(ngModel)]="quizName" class="text-capitalize">
+                    <input matInput [(ngModel)]="quizData.quizName" class="text-capitalize">
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="w-100">
                     <mat-label>Description</mat-label>
-                    <input matInput [(ngModel)]="quizDescription" class="text-capitalize">
+                    <input matInput [(ngModel)]="quizData.quizDescription" class="text-capitalize">
                 </mat-form-field>
             </div>
             <div *ngIf="readonly">
-                <p class="mt-3 quiz-name text-capitalize">{{quizName || 'Blank Quiz'}}</p>
-                <p class="mt-3 mb-4 text-secondary text-capitalize">{{quizDescription || 'Description'}}</p>
+                <p class="mt-3 quiz-name text-capitalize">{{quizData.quizName || 'Blank Quiz'}}</p>
+                <p class="mt-3 mb-4 text-secondary text-capitalize">{{quizData.quizDescription || 'Description'}}</p>
                 <mat-divider></mat-divider>
                 <div class="row mt-5 justify-content-between pl-3 pr-3 text-secondary">
-                    <div class="col-xs-6">Total Question : <span class="font-weight-bold">{{questionBank.length}}</span>
+                    <div class="col-xs-6">Total Question : <span class="font-weight-bold">{{quizData.questions.length}}</span>
                     </div>
                     <div class="col-xs-6">
                         <span class="float-right">
@@ -27,13 +27,13 @@
             </div>
         </mat-card>
         <div class="text-center mb-2 mt-3">
-            <mat-icon>keyboard_arrow_down</mat-icon>
+            <!-- <mat-icon>keyboard_arrow_down</mat-icon> -->
         </div>
-        <div cdkDropList [cdkDropListData]="questionBank" (cdkDropListDropped)="dragDropQuestion($event)" class="question-list">
-            <mat-card cdkDrag class="p-4 mb-3 question" *ngFor="let data of questionBank, let i = index" (click)="editQuestion(data)"
+        <div cdkDropList [cdkDropListData]="quizData.questions" (cdkDropListDropped)="dragDropQuestion($event)" class="question-list">
+            <mat-card cdkDrag class="p-4 mb-3 question" *ngFor="let data of quizData.questions, let i = index" (click)="editQuestion(data)"
                 [ngClass]="{'mat-card-active': data.readonly === false}">
                 <div class="text-center">
-                    <mat-icon class="text-secondary drag-handler-icon" cdkDragHandle>drag_indicator</mat-icon>
+                    <mat-icon class="text-secondary drag-handler-icon" style="transform: rotate(90deg);position: absolute;top: 0;right: 48.7%;" cdkDragHandle>drag_indicator</mat-icon>
                 </div>
                 <span class="text-white float-right" *ngIf="data.readonly && isQuestionValid(data)" matTooltip="Invalid Question">
                     <mat-icon class="invalid-question">lens</mat-icon>
@@ -106,7 +106,7 @@
     <div class="row w-100 mt-3 mb-3 pl-3 pr-3 footer">
         <mat-card class="footer-card shadow pl-5 pr-5">
             <button mat-icon-button color="basic" class="btn-hover" matTooltip="Add new question"
-                (click)="addQuestion(questionBank.length - 1)">
+                (click)="addQuestion(quizData.questions.length - 1)">
                 <mat-icon>add_circle</mat-icon>
             </button>
             <button mat-icon-button color="basic" class="btn-hover" matTooltip="Settings" (click)="openSettings()">

@@ -33,10 +33,6 @@
             cursor: pointer;
         }
         .drag-handler-icon {
-            transform: rotate(90deg);
-            position: absolute;
-            top: 0;
-            right: 48.7%;
             cursor: pointer;
         }
     }
@@ -80,5 +76,9 @@
         position: absolute;
         right: 5px;
         top: 5px;
+    }
+    .minute-field {
+        font-size: 12px;
+        width: 60px;
     }
 }
