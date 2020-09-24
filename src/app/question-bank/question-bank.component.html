@@ -29,10 +29,13 @@
         <div class="text-center mb-2 mt-3">
             <mat-icon>keyboard_arrow_down</mat-icon>
         </div>
-        <div cdkDropList (cdkDropListDropped)="dragDropQuestion($event)">
-            <mat-card cdkDrag class="p-4 mb-3" *ngFor="let data of questionBank, let i = index" (click)="editQuestion(data)"
+        <div cdkDropList [cdkDropListData]="questionBank" (cdkDropListDropped)="dragDropQuestion($event)" class="question-list">
+            <mat-card cdkDrag class="p-4 mb-3 question" *ngFor="let data of questionBank, let i = index" (click)="editQuestion(data)"
                 [ngClass]="{'mat-card-active': data.readonly === false}">
-                <span class="float-right" *ngIf="data.readonly && isQuestionValid(data)" matTooltip="Invalid Question">
+                <div class="text-center">
+                    <mat-icon class="text-secondary drag-handler-icon" cdkDragHandle>drag_indicator</mat-icon>
+                </div>
+                <span class="text-white float-right" *ngIf="data.readonly && isQuestionValid(data)" matTooltip="Invalid Question">
                     <mat-icon class="invalid-question">lens</mat-icon>
                 </span>
                 <div class="row question-header" *ngIf="!data.readonly">

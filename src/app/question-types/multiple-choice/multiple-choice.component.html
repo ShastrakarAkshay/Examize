@@ -2,12 +2,13 @@
     <div class="col-sm-12 pb-4" *ngIf="!data.readonly" cdkDropList (cdkDropListDropped)="dragDropOptions($event)">
         <div *ngFor="let option of data.options" cdkDrag>
             <mat-radio-group [(ngModel)]="data.answerKey[0]">
-                <mat-radio-button color="primary" [value]="option.id"> </mat-radio-button>
+                <mat-radio-button cdkDragHandle color="primary" [value]="option.id"> </mat-radio-button>
             </mat-radio-group>
             <mat-form-field class="ml-2 w-90 option-input">
                 <input matInput [(ngModel)]="option.name">
             </mat-form-field>
-            <button mat-icon-button color="basic" class="float-right btn-hover" matTooltip="Remove" (click)="removeOption(option.id)">
+            <button mat-icon-button color="basic" class="float-right btn-hover" matTooltip="Remove"
+                (click)="removeOption(option.id)">
                 <mat-icon>close</mat-icon>
             </button>
         </div>
@@ -20,8 +21,8 @@
     </div>
     <div class="col-sm-12" *ngIf="data.readonly">
         <mat-radio-group class="example-radio-group mb-0" [(ngModel)]="data.answerKey[0]">
-            <mat-radio-button color="primary" *ngFor="let option of data.options" class="m-1"
-                [value]="option.id" disabled>
+            <mat-radio-button color="primary" *ngFor="let option of data.options" class="m-1" [value]="option.id"
+                disabled>
                 {{option.name.trim() || 'Option'}}
             </mat-radio-button>
             <mat-radio-button color="primary" *ngIf="data.options.length === 0" class="m-1" value="" disabled>
