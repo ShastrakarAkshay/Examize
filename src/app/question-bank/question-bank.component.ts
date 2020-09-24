@@ -220,7 +220,9 @@ export class QuestionBankComponent implements OnInit {
       data: this.quizData.settings
     });
     settingsPanel.afterDismissed().subscribe(res => {
-      this.quizData.settings = res;
+      if (res) {
+        this.quizData.settings = res;
+      }
     })
   }
 
@@ -245,8 +247,8 @@ export class QuestionBankSettings implements OnInit {
     this.settings = this.data;
   }
 
-  settingsDismiss() {
-    this._bottomSheetRef.dismiss(this.settings);
+  settingsDismiss(data: any) {
+    this._bottomSheetRef.dismiss(data);
   }
 
 }
