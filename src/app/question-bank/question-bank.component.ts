@@ -1,11 +1,9 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { isNgTemplate, ReadPropExpr } from '@angular/compiler';
-import { ChangeDetectionStrategy, Inject } from '@angular/core';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Inject, Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import * as _ from 'lodash';
 import { CQuestionTypes } from '../question-types/question-type.constant';
-import { IQuestionBank, IQuestionOptions, IQuizModal, IQuizSettings } from './interface/question-bank.interface';
+import { IQuestionBank, IQuizModal, IQuizSettings } from './interface/question-bank.interface';
 
 @Component({
   selector: 'app-question-bank',
@@ -18,6 +16,16 @@ export class QuestionBankComponent implements OnInit {
   quizData: IQuizModal;
   questionType = CQuestionTypes;
   readonly: boolean = true;
+  private _emptyQuestion: IQuestionBank = {
+    id: new Date(),
+    question: '',
+    questionType: 1,
+    options: [],
+    answerKey: [],
+    points: 0,
+    required: false,
+    readonly: false
+  }
 
   constructor(private _matBottomSheet: MatBottomSheet) { }
 
@@ -26,18 +34,8 @@ export class QuestionBankComponent implements OnInit {
   }
 
   private _initializeQuesitonBank() {
-    const emptyQuestion: IQuestionBank = {
-      id: new Date(),
-      question: '',
-      questionType: 1,
-      options: [],
-      answerKey: [],
-      points: 0,
-      required: false,
-      readonly: false
-    }
     if (!_.size(this.quizData.questions)) {
-      this.quizData.questions.push(emptyQuestion);
+      this.quizData.questions.push({ ...this._emptyQuestion, id: Date.now() });
     }
   }
 
@@ -58,20 +56,10 @@ export class QuestionBankComponent implements OnInit {
 
 
   addQuestion(index: number) {
-    const newQuestion = {
-      id: Date.now(),
-      question: '',
-      questionType: 1,
-      options: [],
-      answerKey: [],
-      points: 0,
-      required: false,
-      readonly: false
-    }
     this.quizData.questions = this.quizData.questions.map(item => {
       return { ...item, readonly: true }
     })
-    this.quizData.questions.splice(index + 1, 0, newQuestion);
+    this.quizData.questions.splice(index + 1, 0, { ...this._emptyQuestion, id: Date.now() });
     const card = document.getElementById('card' + index);
     card.scrollIntoView({ behavior: 'smooth' });
   }
@@ -134,7 +122,7 @@ export class QuestionBankComponent implements OnInit {
         },
         negativeMarking: false,
         showResult: false,
-        shuffleQuestions: false
+        shuffleQuestions: true
       },
       questions: []
     }
@@ -164,17 +152,12 @@ export class QuestionBankComponent implements OnInit {
   styleUrls: ['./question-bank.component.scss']
 })
 export class QuestionBankSettings implements OnInit {
-
   settings: IQuizSettings;
-
   constructor(private _bottomSheetRef: MatBottomSheetRef<QuestionBankSettings>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) { }
-
   ngOnInit() {
     this.settings = this.data;
   }
-
-  settingsDismiss(data: any) {
+  settingsDismiss(data: IQuizSettings) {
     this._bottomSheetRef.dismiss(data);
   }
-
 }
