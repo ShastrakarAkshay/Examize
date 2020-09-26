@@ -23,6 +23,7 @@ import { QuestionBankComponent, QuestionBankSettings } from './question-bank/que
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { QuestionBankListComponent } from './question-bank-list/question-bank-list.component';
 
 const MaterialModules = [
   MatCheckboxModule,
@@ -49,7 +50,8 @@ const FirebaseModules = [];
     CheckboxComponent,
     QuestionBankComponent,
     MultipleChoiceComponent,
-    QuestionBankSettings
+    QuestionBankSettings,
+    QuestionBankListComponent
   ],
   imports: [
     BrowserModule,

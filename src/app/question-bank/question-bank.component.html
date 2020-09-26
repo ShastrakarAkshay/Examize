@@ -31,7 +31,7 @@
         </div>
         <div cdkDropList [cdkDropListData]="quizData.questions" (cdkDropListDropped)="dragDropQuestion($event)" class="question-list">
             <mat-card cdkDrag class="p-4 mb-3 question" *ngFor="let data of quizData.questions, let i = index" (click)="editQuestion(data)"
-                [ngClass]="{'mat-card-active': data.readonly === false}">
+                [ngClass]="{'mat-card-active': data.readonly === false}"  id="{{'card'+i}}">
                 <div class="text-center">
                     <mat-icon class="text-secondary drag-handler-icon" style="transform: rotate(90deg);position: absolute;top: 0;right: 48.7%;" cdkDragHandle>drag_indicator</mat-icon>
                 </div>

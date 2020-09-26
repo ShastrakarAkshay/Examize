@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { isNgTemplate, ReadPropExpr } from '@angular/compiler';
-import { Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Inject } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import * as _ from 'lodash';
@@ -10,7 +10,8 @@ import { IQuestionBank, IQuestionOptions, IQuizModal, IQuizSettings } from './in
 @Component({
   selector: 'app-question-bank',
   templateUrl: './question-bank.component.html',
-  styleUrls: ['./question-bank.component.scss']
+  styleUrls: ['./question-bank.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionBankComponent implements OnInit {
 
@@ -21,84 +22,7 @@ export class QuestionBankComponent implements OnInit {
   constructor(private _matBottomSheet: MatBottomSheet) { }
 
   ngOnInit(): void {
-    this.quizData = {
-      quizName: '',
-      quizDescription: '',
-      settings: {
-        timer: {
-          status: false,
-          duration: 30
-        },
-        negativeMarking: false,
-        showResult: false,
-        shuffleQuestions: false
-      },
-      questions: []
-    }
-
-    this.quizData.questions = [
-      {
-        id: 10001,
-        question: 'Who is PM of india?',
-        questionType: 1, // 1. multiple choice 2. checkbox etc
-        options: [
-          {
-            id: 1,
-            name: 'Narendara Modi'
-          },
-          {
-            id: 2,
-            name: 'Lalu Yadav'
-          }, {
-            id: 3,
-            name: ' '
-          }
-        ],
-        answerKey: [1],
-        points: 2,
-        required: false,
-        readonly: true
-      },
-      {
-        id: 10002,
-        question: 'What is capital of maharashtra?',
-        questionType: 2, // 1. multiple choice 2. checkbox etc
-        options: [
-          {
-            id: 1,
-            name: 'Nagpur'
-          },
-          {
-            id: 2,
-            name: 'Mumbai'
-          }
-        ],
-        answerKey: [2],
-        points: 2,
-        required: false,
-        readonly: true
-      },
-      {
-        id: 10003,
-        question: 'What is capital of india?',
-        questionType: 1, // 1. multiple choice 2. checkbox etc
-        options: [
-          {
-            id: 1,
-            name: 'Delhi'
-          },
-          {
-            id: 2,
-            name: 'Mumbai'
-          }
-        ],
-        answerKey: [1],
-        points: 2,
-        required: true,
-        readonly: true
-      }
-    ];
-    this._initializeQuesitonBank();
+    this.startsOver();
   }
 
   private _initializeQuesitonBank() {
@@ -148,6 +72,8 @@ export class QuestionBankComponent implements OnInit {
       return { ...item, readonly: true }
     })
     this.quizData.questions.splice(index + 1, 0, newQuestion);
+    const card = document.getElementById('card' + index);
+    card.scrollIntoView({ behavior: 'smooth' });
   }
 
   addMarks(id: any) {
