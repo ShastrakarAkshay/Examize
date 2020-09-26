@@ -8,7 +8,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 export class QuestionBankListComponent implements OnInit {
 
   questionList: any = [] = [];
-  mobileScreenWidth: number = 768;
+  mobileScreenWidth: number = 1024; // tablet screen
   isMobileView: boolean = false;
 
   constructor() {

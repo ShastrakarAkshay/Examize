@@ -9,6 +9,10 @@
     &:hover {
         border-left: 5px solid #868aff;
         @extend .box-shadow;
+        .title {
+            color: red;
+            cursor: pointer;
+        }
     }
     .mat-content {
         display: flex;
