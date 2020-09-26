@@ -9,6 +9,7 @@ export class QuestionBankListComponent implements OnInit {
 
   questionList: any = [] = [];
   mobileScreenWidth: number = 768;
+  isMobileView: boolean = false;
 
   constructor() {
   }
@@ -49,8 +50,9 @@ export class QuestionBankListComponent implements OnInit {
   }
 
   private _alwaysShowDeleteButton() {
+    this.isMobileView = window.innerWidth <= this.mobileScreenWidth ? true : false;
     this.questionList = this.questionList.map(item => {
-      return { ...item, showDelete: window.innerWidth <= this.mobileScreenWidth ? true : false }
+      return { ...item, showDelete: this.isMobileView ? true : false }
     })
   }
 
