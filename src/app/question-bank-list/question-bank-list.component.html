@@ -1,4 +1,8 @@
-<mat-card class="p-4 mb-3 text-capitalize" *ngFor="let i of [1,2,3,4,5]" routerLink="question-bank">
+<mat-card class="p-4 mb-3 text-capitalize" *ngFor="let list of questionList" routerLink="question-bank" (mouseover)="list.showDelete = true;" (mouseleave)="list.showDelete = false;">
+    <button mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete" *ngIf="list.showDelete"
+        (click)="$event.stopPropagation();">
+        <mat-icon>delete_outline</mat-icon>
+    </button>
     <h2 class="mb-0 title"> Blank Quiz </h2>
     <p class="mb-0 text-secondary">Description</p>
     <div class="mat-content mt-3 text-secondary">

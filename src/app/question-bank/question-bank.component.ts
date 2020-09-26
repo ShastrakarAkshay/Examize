@@ -74,8 +74,10 @@ export class QuestionBankComponent implements OnInit {
       return { ...item, readonly: true }
     })
     this.quizData.questions.splice(index + 1, 0, emptyQuestion);
-    const card = document.getElementById('card' + index);
-    card.scrollIntoView({ behavior: 'smooth' });
+    if(index >= 0) {
+      const card = document.getElementById('card' + index);
+      card.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   addMarks(id: any) {
