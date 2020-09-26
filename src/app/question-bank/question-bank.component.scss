@@ -25,12 +25,19 @@
         .question-header {
             font-size: 18px;
         }
-        .invalid-question {
-            position: absolute;
+        .invalid {
             font-size: 13px;
             color: #da1010;
             top: 10px;
             cursor: pointer;
+        }
+        .invalid-question {
+            position: absolute;
+            @extend .invalid;
+        }
+        .invalid-preview {
+            margin-top: 2px;
+            @extend .invalid;
         }
         .drag-handler-icon {
             cursor: pointer;
