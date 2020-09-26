@@ -1,0 +1,12 @@
+.snack-panel {
+    display: flex;
+    justify-content: space-between;
+    .icon {
+        border-radius: 50%;
+        color: #fff;
+    }
+    .close-icon:hover {
+        color: #fff;
+        cursor: pointer;
+    }
+}

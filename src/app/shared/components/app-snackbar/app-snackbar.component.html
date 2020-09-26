@@ -1,0 +1,9 @@
+<div class="pl-3 snack-panel">
+    <div class="snack-panel">
+        <mat-icon class="icon" [class]="getIcon.bgColor">{{getIcon.iconName}}</mat-icon>
+        <p class="pl-2 pr-2 pt-1 mb-0">{{data.messege}}</p>
+    </div>
+    <div>
+        <mat-icon class="close-icon" (click)="dismiss()">close</mat-icon>
+    </div>
+</div>

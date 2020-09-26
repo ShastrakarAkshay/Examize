@@ -1,8 +1,10 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Inject, Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as _ from 'lodash';
 import { CQuestionTypes } from '../question-types/question-type.constant';
+import { AppSnackbarComponent } from '../shared/components/app-snackbar/app-snackbar.component';
 import { IQuestionBank, IQuizModal, IQuizSettings } from './interface/question-bank.interface';
 
 @Component({
@@ -27,7 +29,7 @@ export class QuestionBankComponent implements OnInit {
     readonly: false
   }
 
-  constructor(private _matBottomSheet: MatBottomSheet) { }
+  constructor(private _matBottomSheet: MatBottomSheet, private _matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.startsOver();
@@ -56,6 +58,7 @@ export class QuestionBankComponent implements OnInit {
 
 
   addQuestion(index: number) {
+    this.readonly = true;
     this.quizData.questions = this.quizData.questions.map(item => {
       return { ...item, readonly: true }
     })
@@ -109,6 +112,11 @@ export class QuestionBankComponent implements OnInit {
     // remove question that has empty options array
     this.quizData.questions = filteredOptions.filter(item => item.options.length > 0);
     console.log(this.quizData)
+    this._matSnackBar.openFromComponent(AppSnackbarComponent, {
+      duration: 2000,
+      verticalPosition: 'top',
+      data: { messege: 'Saved Successfully !', icon: 'success' }
+    })
   }
 
   startsOver() {
