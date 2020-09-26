@@ -18,16 +18,6 @@ export class QuestionBankComponent implements OnInit {
   quizData: IQuizModal;
   questionType = CQuestionTypes;
   readonly: boolean = true;
-  private _emptyQuestion: IQuestionBank = {
-    id: new Date(),
-    question: '',
-    questionType: 1,
-    options: [],
-    answerKey: [],
-    points: 0,
-    required: false,
-    readonly: false
-  }
 
   constructor(private _matBottomSheet: MatBottomSheet, private _matSnackBar: MatSnackBar) { }
 
@@ -36,8 +26,19 @@ export class QuestionBankComponent implements OnInit {
   }
 
   private _initializeQuesitonBank() {
+    const emptyQuestion: IQuestionBank = {
+      id: Date.now(),
+      question: '',
+      questionType: 1,
+      options: [],
+      answerKey: [],
+      points: 0,
+      required: false,
+      readonly: false
+    }
+  
     if (!_.size(this.quizData.questions)) {
-      this.quizData.questions.push({ ...this._emptyQuestion, id: Date.now() });
+      this.quizData.questions.push(emptyQuestion);
     }
   }
 
@@ -59,10 +60,20 @@ export class QuestionBankComponent implements OnInit {
 
   addQuestion(index: number) {
     this.readonly = true;
+    const emptyQuestion: IQuestionBank = {
+      id: Date.now(),
+      question: '',
+      questionType: 1,
+      options: [],
+      answerKey: [],
+      points: 0,
+      required: false,
+      readonly: false
+    }
     this.quizData.questions = this.quizData.questions.map(item => {
       return { ...item, readonly: true }
     })
-    this.quizData.questions.splice(index + 1, 0, { ...this._emptyQuestion, id: Date.now() });
+    this.quizData.questions.splice(index + 1, 0, emptyQuestion);
     const card = document.getElementById('card' + index);
     card.scrollIntoView({ behavior: 'smooth' });
   }
@@ -103,11 +114,16 @@ export class QuestionBankComponent implements OnInit {
   submit() {
     // remove question that has blank question name
     const filteredQuestions = this.quizData.questions.filter(item => item.question.trim() !== "");
-    // remove options that has blank option name
     const filteredOptions = filteredQuestions.map(item => {
+      // remove answer key ids if option name is empty
+      item.options.forEach(opt => {
+        if(opt.name.trim() === ''){
+          item.answerKey = item.answerKey.filter(key => key !== opt.id);
+        }
+      })
+      // remove options that has blank option name
       return { ...item, options: item.options.filter(option => option.name.trim() !== "") }
     })
-    // @todo: remove answer key ids if options is removed
 
     // remove question that has empty options array
     this.quizData.questions = filteredOptions.filter(item => item.options.length > 0);
@@ -150,6 +166,13 @@ export class QuestionBankComponent implements OnInit {
 
   dragDropQuestion(event: CdkDragDrop<any>) {
     moveItemInArray(this.quizData.questions, event.previousIndex, event.currentIndex);
+  }
+
+  questionTypeChanged(event: any, data: any) {
+    this.quizData.questions = this.quizData.questions.filter(item => {
+      item.answerKey = item.answerKey.slice(0, 1);
+      return item;
+    })
   }
 
 }

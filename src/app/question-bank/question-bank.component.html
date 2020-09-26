@@ -39,9 +39,8 @@
                         style="transform: rotate(90deg);position: absolute;top: 0;right: 48.7%;" cdkDragHandle>
                         drag_indicator</mat-icon>
                 </div>
-                <span class="text-white float-right" *ngIf="data.readonly && isQuestionValid(data)"
-                    matTooltip="Invalid Question">
-                    <mat-icon class="invalid-question">lens</mat-icon>
+                <span class="text-white float-right" *ngIf="data.readonly && isQuestionValid(data)">
+                    <mat-icon class="invalid-question" matTooltip="Invalid Question">lens</mat-icon>
                 </span>
                 <div class="row question-header" *ngIf="!data.readonly">
                     <div class="col-sm-7">
@@ -53,7 +52,7 @@
                     <div class="col-sm-5">
                         <mat-form-field appearance="fill" class="w-100">
                             <mat-label>Question Type</mat-label>
-                            <mat-select matNativeControl [(ngModel)]="data.questionType">
+                            <mat-select matNativeControl [(ngModel)]="data.questionType" (selectionChange)="questionTypeChanged($event, data)">
                                 <mat-option *ngFor="let option of questionType" [value]="option.id">
                                     <i class="mr-2" [ngClass]="option.iconClass"></i>
                                     {{option.name}}
@@ -108,8 +107,8 @@
             </mat-card>
         </div>
         <mat-card class="p-4" style="display: flex;">
-            <mat-icon class="invalid-preview">lens</mat-icon>
-            <span class="text-secondary pl-2">has empty question name OR has empty option name OR has no options AND these questions will ingored after save !</span>
+            <mat-icon class="invalid-preview" matTooltip="Invalid Question">lens</mat-icon>
+            <span class="text-secondary pl-2">has empty question name OR has empty option name OR has no options AND these questions or option will be ignore !</span>
         </mat-card>
     </div>
     <div class="row w-100 mt-3 mb-3 pl-3 pr-3 footer">
