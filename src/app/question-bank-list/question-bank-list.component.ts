@@ -8,8 +8,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 export class QuestionBankListComponent implements OnInit {
 
   questionList: any = [] = [];
+  mobileScreenWidth: number = 768;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.questionList = [
@@ -38,6 +40,18 @@ export class QuestionBankListComponent implements OnInit {
         showDelete: false
       }
     ]
+    this._alwaysShowDeleteButton();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this._alwaysShowDeleteButton();
+  }
+
+  private _alwaysShowDeleteButton() {
+    this.questionList = this.questionList.map(item => {
+      return { ...item, showDelete: window.innerWidth <= this.mobileScreenWidth ? true : false }
+    })
   }
 
 }

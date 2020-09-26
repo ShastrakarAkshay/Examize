@@ -1,4 +1,4 @@
-<mat-card class="p-4 mb-3 text-capitalize" *ngFor="let list of questionList" routerLink="question-bank" (mouseover)="list.showDelete = true;" (mouseleave)="list.showDelete = false;">
+<mat-card class="p-4 mb-3 text-capitalize" *ngFor="let list of questionList" routerLink="question-bank" (mouseover)="list.showDelete = true;" (mouseleave)="list.showDelete = false">
     <button mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete" *ngIf="list.showDelete"
         (click)="$event.stopPropagation();">
         <mat-icon>delete_outline</mat-icon>
