@@ -52,7 +52,7 @@ export class QuestionBankListComponent implements OnInit {
     return totalMarks;
   }
 
-  navigateToQuestionBank(id?: any) {
+  navigateToQuestionBank(id: any) {
     this._router.navigateByUrl('question-bank/' + id);
   }
 

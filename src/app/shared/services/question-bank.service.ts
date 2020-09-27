@@ -8,16 +8,9 @@ import { IQuizModal } from 'src/app/question-bank/interface/question-bank.interf
 })
 export class QuestionBankService {
 
-  questionData = new Subject();
-  questionBank$ = this.questionData.asObservable();
-
   COLLECTION = 'QuestionBank';
 
   constructor(private _firestore: AngularFirestore) { }
-
-  setQuestionBankData(data: IQuizModal) {
-    this.questionData.next(data);
-  }
 
   saveQuestionBank(data: IQuizModal): Promise<any> {
     return this._firestore.collection(this.COLLECTION).add(data);
