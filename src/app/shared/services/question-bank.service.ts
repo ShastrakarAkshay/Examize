@@ -11,6 +11,8 @@ export class QuestionBankService {
   questionData = new Subject();
   questionBank$ = this.questionData.asObservable();
 
+  COLLECTION = 'QuestionBank';
+
   constructor(private _firestore: AngularFirestore) { }
 
   setQuestionBankData(data: IQuizModal) {
@@ -18,15 +20,22 @@ export class QuestionBankService {
   }
 
   saveQuestionBank(data: IQuizModal): Promise<any> {
-    return this._firestore.collection('QuestionBank').add(data);
+    return this._firestore.collection(this.COLLECTION).add(data);
   }
 
   getAllQuestionBank(): Observable<any> {
-    return this._firestore.collection('QuestionBank').snapshotChanges();
+    return this._firestore.collection(this.COLLECTION).snapshotChanges();
   }
 
   deleteQuestionBank(id: any): Promise<any> {
-    return this._firestore.collection('QuestionBank').doc(id).delete();
+    return this._firestore.collection(this.COLLECTION).doc(id).delete();
   }
 
+  getQuestionBankById(id: any): Observable<any>{
+    return this._firestore.collection(this.COLLECTION).doc(id).snapshotChanges();
+  }
+
+  updateQuestionBank(id: any, data: IQuizModal): Promise<any> {
+    return this._firestore.collection(this.COLLECTION).doc(id).update(data);
+  }
 }

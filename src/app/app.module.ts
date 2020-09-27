@@ -15,6 +15,7 @@ import { AppSnackbarComponent } from './shared/components/app-snackbar/app-snack
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
+import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
 
 const FirebaseModules = [
   AngularFireModule.initializeApp(environment.firebase),
@@ -28,6 +29,7 @@ const FirebaseModules = [
     QuestionBankComponent,
     MultipleChoiceComponent,
     QuestionBankSettings,
+    ConfirmDialogComponent,
     QuestionBankListComponent,
     AppSnackbarComponent
   ],
@@ -43,6 +45,6 @@ const FirebaseModules = [
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [QuestionBankSettings]
+  entryComponents: [QuestionBankSettings,ConfirmDialogComponent]
 })
 export class AppModule { }

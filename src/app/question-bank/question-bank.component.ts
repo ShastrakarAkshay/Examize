@@ -1,36 +1,42 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Inject, Component, OnInit } from '@angular/core';
+import { Inject, Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { CQuestionTypes } from '../question-types/question-type.constant';
-import { AppSnackBarService } from '../shared/components/app-snackbar/services/app-snackbar.service';
-import { QuestionBankService } from '../shared/components/app-snackbar/services/question-bank.service';
+import { AppSnackBarService } from '../shared/services/app-snackbar.service';
+import { QuestionBankService } from '../shared/services/question-bank.service';
 import { IQuestionBank, IQuizModal, IQuizSettings } from './interface/question-bank.interface';
 
 @Component({
   selector: 'app-question-bank',
   templateUrl: './question-bank.component.html',
-  styleUrls: ['./question-bank.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./question-bank.component.scss']
 })
 export class QuestionBankComponent implements OnInit {
 
+  quizID: any;
   quizData: IQuizModal;
   questionType = CQuestionTypes;
   readonly: boolean = true;
 
   constructor(private _matBottomSheet: MatBottomSheet,
     private _router: Router,
+    private _activatedRoute: ActivatedRoute,
     private _questionBankService: QuestionBankService,
     private _appSnackBarService: AppSnackBarService) { }
 
   ngOnInit(): void {
-    this.startsOver();
-    this._questionBankService.questionBank$.subscribe(res => {
-      console.log(res);
-      this.quizData = res as IQuizModal;
-      this._initializeQuesitonBank();
+    this._activatedRoute.paramMap.subscribe(param => {
+      this.quizID = param.get('id');
+      if (this.quizID && this.quizID !== "0") {
+        this._questionBankService.getQuestionBankById(this.quizID).subscribe(res => {
+          this.quizData = res.payload.data();
+        })
+      } else {
+        this.startsOver();
+        this.quizID = null;
+      }
     })
   }
 
@@ -164,7 +170,14 @@ export class QuestionBankComponent implements OnInit {
     if (res) {
       if (!_.size(this.quizData.questions)) {
         this._appSnackBarService.error('No data to save.');
+      } else if (this.quizID) {
+        // update
+        this._questionBankService.updateQuestionBank(this.quizID, this.quizData).then(res => {
+          this._router.navigateByUrl('/');
+          this._appSnackBarService.success('Update Successful !');
+        })
       } else {
+        // save
         this._questionBankService.saveQuestionBank(this.quizData).then(res => {
           this._router.navigateByUrl('/');
           this._appSnackBarService.success('Save Successful !');

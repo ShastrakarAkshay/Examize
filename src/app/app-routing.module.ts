@@ -11,8 +11,12 @@ const routes: Routes = [
     component: QuestionBankListComponent
   },
   {
-    path: 'question-bank',
+    path: 'question-bank/:id',
     component: QuestionBankComponent
+  },
+  {
+    path: '**',
+    component: QuestionBankListComponent
   }
 ];
 

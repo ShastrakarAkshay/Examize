@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppSnackBarService } from '../shared/components/app-snackbar/services/app-snackbar.service';
-import { QuestionBankService } from '../shared/components/app-snackbar/services/question-bank.service';
+import { AppSnackBarService } from '../shared/services/app-snackbar.service';
+import { QuestionBankService } from '../shared/services/question-bank.service';
 
 @Component({
   selector: 'app-question-bank-list',
@@ -24,6 +24,7 @@ export class QuestionBankListComponent implements OnInit {
       this.questionList = res.map((item) => {
         return { ...item.payload.doc.data(), showDelete: false, id: item.payload.doc.id };
       });
+      console.log(this.questionList)
     })
   }
 
@@ -51,9 +52,8 @@ export class QuestionBankListComponent implements OnInit {
     return totalMarks;
   }
 
-  navigateToQuestionBank(data: any) {
-    this._router.navigateByUrl('question-bank');
-    this._questionBankService.setQuestionBankData(data);
+  navigateToQuestionBank(id?: any) {
+    this._router.navigateByUrl('question-bank/' + id);
   }
 
   deleteQuestionBank(id: any) {

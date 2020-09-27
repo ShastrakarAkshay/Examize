@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 const MAT_MODULE = [
@@ -29,7 +30,8 @@ const MAT_MODULE = [
     MatIconModule,
     MatTooltipModule,
     MatBottomSheetModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
 ];
 
 @NgModule({
