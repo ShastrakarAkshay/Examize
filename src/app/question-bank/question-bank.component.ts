@@ -1,10 +1,11 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Inject, Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { CQuestionTypes } from '../question-types/question-type.constant';
-import { AppSnackbarComponent } from '../shared/components/app-snackbar/app-snackbar.component';
+import { AppSnackBarService } from '../shared/components/app-snackbar/services/app-snackbar.service';
+import { QuestionBankService } from '../shared/components/app-snackbar/services/question-bank.service';
 import { IQuestionBank, IQuizModal, IQuizSettings } from './interface/question-bank.interface';
 
 @Component({
@@ -19,10 +20,38 @@ export class QuestionBankComponent implements OnInit {
   questionType = CQuestionTypes;
   readonly: boolean = true;
 
-  constructor(private _matBottomSheet: MatBottomSheet, private _matSnackBar: MatSnackBar) { }
+  constructor(private _matBottomSheet: MatBottomSheet,
+    private _router: Router,
+    private _questionBankService: QuestionBankService,
+    private _appSnackBarService: AppSnackBarService) { }
 
   ngOnInit(): void {
     this.startsOver();
+    this._questionBankService.questionBank$.subscribe(res => {
+      console.log(res);
+      this.quizData = res as IQuizModal;
+      this._initializeQuesitonBank();
+    })
+  }
+
+  startsOver() {
+    this.quizData = {
+      quizName: '',
+      quizDescription: '',
+      settings: {
+        timer: {
+          status: false,
+          duration: 30
+        },
+        negativeMarking: false,
+        showResult: false,
+        shuffleQuestions: true
+      },
+      questions: [],
+      createdOn: '',
+      modifiedOn: ''
+    }
+    this._initializeQuesitonBank();
   }
 
   private _initializeQuesitonBank() {
@@ -36,7 +65,7 @@ export class QuestionBankComponent implements OnInit {
       required: false,
       readonly: false
     }
-  
+
     if (!_.size(this.quizData.questions)) {
       this.quizData.questions.push(emptyQuestion);
     }
@@ -74,7 +103,7 @@ export class QuestionBankComponent implements OnInit {
       return { ...item, readonly: true }
     })
     this.quizData.questions.splice(index + 1, 0, emptyQuestion);
-    if(index >= 0) {
+    if (index >= 0) {
       const card = document.getElementById('card' + index);
       card.scrollIntoView({ behavior: 'smooth' });
     }
@@ -116,10 +145,11 @@ export class QuestionBankComponent implements OnInit {
   submit() {
     // remove question that has blank question name
     const filteredQuestions = this.quizData.questions.filter(item => item.question.trim() !== "");
+
     const filteredOptions = filteredQuestions.map(item => {
       // remove answer key ids if option name is empty
       item.options.forEach(opt => {
-        if(opt.name.trim() === ''){
+        if (opt.name.trim() === '') {
           item.answerKey = item.answerKey.filter(key => key !== opt.id);
         }
       })
@@ -129,30 +159,18 @@ export class QuestionBankComponent implements OnInit {
 
     // remove question that has empty options array
     this.quizData.questions = filteredOptions.filter(item => item.options.length > 0);
-    console.log(this.quizData)
-    this._matSnackBar.openFromComponent(AppSnackbarComponent, {
-      duration: 2000,
-      verticalPosition: 'top',
-      data: { messege: 'Saved Successfully !', icon: 'success' }
-    })
-  }
 
-  startsOver() {
-    this.quizData = {
-      quizName: '',
-      quizDescription: '',
-      settings: {
-        timer: {
-          status: false,
-          duration: 30
-        },
-        negativeMarking: false,
-        showResult: false,
-        shuffleQuestions: true
-      },
-      questions: []
+    const res = confirm('Are you sure');
+    if (res) {
+      if (!_.size(this.quizData.questions)) {
+        this._appSnackBarService.error('No data to save.');
+      } else {
+        this._questionBankService.saveQuestionBank(this.quizData).then(res => {
+          this._router.navigateByUrl('/');
+          this._appSnackBarService.success('Save Successful !');
+        })
+      }
     }
-    this._initializeQuesitonBank();
   }
 
   openSettings() {

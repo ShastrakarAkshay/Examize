@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "examize-pro": {
+      "hosting": {
+        "examize": [
+          "examize-pro"
+        ]
+      }
+    }
+  }
+}

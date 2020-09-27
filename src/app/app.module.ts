@@ -12,8 +12,14 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuestionBankListComponent } from './question-bank-list/question-bank-list.component';
 import { AppMaterialModule } from './material.module';
 import { AppSnackbarComponent } from './shared/components/app-snackbar/app-snackbar.component';
+import { environment } from 'src/environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
 
-const FirebaseModules = [];
+const FirebaseModules = [
+  AngularFireModule.initializeApp(environment.firebase),
+  AngularFirestoreModule
+];
 
 @NgModule({
   declarations: [

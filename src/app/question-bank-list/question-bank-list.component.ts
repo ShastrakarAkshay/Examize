@@ -1,4 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AppSnackBarService } from '../shared/components/app-snackbar/services/app-snackbar.service';
+import { QuestionBankService } from '../shared/components/app-snackbar/services/question-bank.service';
 
 @Component({
   selector: 'app-question-bank-list',
@@ -11,37 +14,17 @@ export class QuestionBankListComponent implements OnInit {
   mobileScreenWidth: number = 1024; // tablet screen
   isMobileView: boolean = false;
 
-  constructor() {
+  constructor(private _questionBankService: QuestionBankService,
+    private _router: Router,
+    private _appSnackBarService: AppSnackBarService) {
   }
 
   ngOnInit(): void {
-    this.questionList = [
-      {
-        id: 1,
-        showDelete: false
-      },
-      {
-        id: 2,
-        showDelete: false
-      },
-      {
-        id: 3,
-        showDelete: false
-      },
-      {
-        id: 4,
-        showDelete: false
-      },
-      {
-        id: 5,
-        showDelete: false
-      },
-      {
-        id: 6,
-        showDelete: false
-      }
-    ]
-    this._alwaysShowDeleteButton();
+    this._questionBankService.getAllQuestionBank().subscribe(res => {
+      this.questionList = res.map((item) => {
+        return { ...item.payload.doc.data(), showDelete: false, id: item.payload.doc.id };
+      });
+    })
   }
 
   @HostListener('window:resize', ['$event'])
@@ -54,6 +37,32 @@ export class QuestionBankListComponent implements OnInit {
     this.questionList = this.questionList.map(item => {
       return { ...item, showDelete: this.isMobileView ? true : false }
     })
+  }
+
+  calculateTotalMarks(question: any): number {
+    let totalMarks = 0;
+    this.questionList.forEach(item => {
+      if (item.id === question.id) {
+        item.questions.forEach(res => {
+          totalMarks += res.points;
+        })
+      }
+    })
+    return totalMarks;
+  }
+
+  navigateToQuestionBank(data: any) {
+    this._router.navigateByUrl('question-bank');
+    this._questionBankService.setQuestionBankData(data);
+  }
+
+  deleteQuestionBank(id: any) {
+    const res = confirm('Are you sure');
+    if (res) {
+      this._questionBankService.deleteQuestionBank(id).then(result => {
+        this._appSnackBarService.success('Delete successful !');
+      })
+    }
   }
 
 }

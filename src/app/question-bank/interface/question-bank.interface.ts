@@ -19,7 +19,9 @@ export interface IQuizModal {
     quizName: string;
     quizDescription: string;
     questions: IQuestionBank[],
-    settings: IQuizSettings
+    settings: IQuizSettings,
+    createdOn: any,
+    modifiedOn: any
 }
 
 export interface IQuizSettings {
