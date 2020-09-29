@@ -8,7 +8,7 @@
             *ngIf="!isMobileView && list.showDelete" (click)="$event.stopPropagation(); deleteQuestionBank(list.id)">
             <mat-icon>delete_outline</mat-icon>
         </button>
-        <button #deleteHide mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete"
+        <button mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete"
             *ngIf="isMobileView" (click)="$event.stopPropagation(); deleteQuestionBank(list.id)">
             <mat-icon>delete_outline</mat-icon>
         </button>
@@ -20,3 +20,5 @@
         </div>
     </mat-card>
 </div>
+
+<app-spinner *ngIf="isLoading"></app-spinner>

@@ -3,7 +3,9 @@ import { Inject, Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CQuestionTypes } from '../question-types/question-type.constant';
+import { AppConfirmDialogService } from '../shared/services/app-confirm-dialog.service';
 import { AppSnackBarService } from '../shared/services/app-snackbar.service';
 import { QuestionBankService } from '../shared/services/question-bank.service';
 import { IQuestionBank, IQuizModal, IQuizSettings } from './interface/question-bank.interface';
@@ -19,10 +21,14 @@ export class QuestionBankComponent implements OnInit {
   quizData: IQuizModal;
   questionType = CQuestionTypes;
   readonly: boolean = true;
+  isLoading: boolean = false;
+
 
   constructor(private _matBottomSheet: MatBottomSheet,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
+    private _ngxSpinnerService: NgxSpinnerService,
+    private _appConfirmDialogService: AppConfirmDialogService,
     private _questionBankService: QuestionBankService,
     private _appSnackBarService: AppSnackBarService) { }
 
@@ -149,41 +155,46 @@ export class QuestionBankComponent implements OnInit {
   }
 
   submit() {
-    // remove question that has blank question name
-    const filteredQuestions = this.quizData.questions.filter(item => item.question.trim() !== "");
+    this._appConfirmDialogService.confirm('Do you want to save?').subscribe(res => {
+      if (res) {
+        this._showSpinner();
+        // remove question that has blank question name
+        const filteredQuestions = this.quizData.questions.filter(item => item.question.trim() !== "");
 
-    const filteredOptions = filteredQuestions.map(item => {
-      // remove answer key ids if option name is empty
-      item.options.forEach(opt => {
-        if (opt.name.trim() === '') {
-          item.answerKey = item.answerKey.filter(key => key !== opt.id);
+        const filteredOptions = filteredQuestions.map(item => {
+          // remove answer key ids if option name is empty
+          item.options.forEach(opt => {
+            if (opt.name.trim() === '') {
+              item.answerKey = item.answerKey.filter(key => key !== opt.id);
+            }
+          })
+          // remove options that has blank option name
+          return { ...item, options: item.options.filter(option => option.name.trim() !== "") }
+        })
+
+        // remove question that has empty options array
+        this.quizData.questions = filteredOptions.filter(item => item.options.length > 0);
+
+
+        if (!_.size(this.quizData.questions)) {
+          this._appSnackBarService.error('No data to save.');
+        } else if (this.quizID) {
+          // update
+          this._questionBankService.updateQuestionBank(this.quizID, this.quizData).then(res => {
+            this._hideSpinner();
+            this._router.navigateByUrl('/');
+            this._appSnackBarService.success('Update Successful !');
+          })
+        } else {
+          // save
+          this._questionBankService.saveQuestionBank(this.quizData).then(res => {
+            this._hideSpinner();
+            this._router.navigateByUrl('/');
+            this._appSnackBarService.success('Save Successful !');
+          })
         }
-      })
-      // remove options that has blank option name
-      return { ...item, options: item.options.filter(option => option.name.trim() !== "") }
-    })
-
-    // remove question that has empty options array
-    this.quizData.questions = filteredOptions.filter(item => item.options.length > 0);
-
-    const res = confirm('Are you sure');
-    if (res) {
-      if (!_.size(this.quizData.questions)) {
-        this._appSnackBarService.error('No data to save.');
-      } else if (this.quizID) {
-        // update
-        this._questionBankService.updateQuestionBank(this.quizID, this.quizData).then(res => {
-          this._router.navigateByUrl('/');
-          this._appSnackBarService.success('Update Successful !');
-        })
-      } else {
-        // save
-        this._questionBankService.saveQuestionBank(this.quizData).then(res => {
-          this._router.navigateByUrl('/');
-          this._appSnackBarService.success('Save Successful !');
-        })
       }
-    }
+    })
   }
 
   openSettings() {
@@ -208,6 +219,15 @@ export class QuestionBankComponent implements OnInit {
     })
   }
 
+  private _showSpinner() {
+    this._ngxSpinnerService.show();
+    this.isLoading = true;
+  }
+
+  private _hideSpinner() {
+    this._ngxSpinnerService.hide();
+    this.isLoading = false;
+  }
 }
 
 @Component({

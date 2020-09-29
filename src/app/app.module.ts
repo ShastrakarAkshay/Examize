@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +15,9 @@ import { AppSnackbarComponent } from './shared/components/app-snackbar/app-snack
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
-import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from './shared/components/app-confirm-dialog/app-confirm-dialog.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { AppSpinnerComponent } from './shared/components/app-spinner/app-spinner.component';
 
 const FirebaseModules = [
   AngularFireModule.initializeApp(environment.firebase),
@@ -31,7 +33,8 @@ const FirebaseModules = [
     QuestionBankSettings,
     ConfirmDialogComponent,
     QuestionBankListComponent,
-    AppSnackbarComponent
+    AppSnackbarComponent,
+    AppSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -41,10 +44,12 @@ const FirebaseModules = [
     ReactiveFormsModule,
     DragDropModule,
     AppMaterialModule,
+    NgxSpinnerModule,
     ...FirebaseModules
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [QuestionBankSettings,ConfirmDialogComponent]
+  entryComponents: [QuestionBankSettings, ConfirmDialogComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }
