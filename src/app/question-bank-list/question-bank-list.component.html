@@ -2,7 +2,7 @@
     Create New
 </button>
 <div *ngIf="questionList.length > 0">
-    <mat-card class="p-4 mb-3 text-capitalize" *ngFor="let list of questionList" (mouseover)="list.showDelete = true;"
+    <mat-card class="p-4 mb-3 text-capitalize text-selection-none" *ngFor="let list of questionList" (mouseover)="list.showDelete = true;"
         (mouseleave)="list.showDelete = false">
         <button mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete"
             *ngIf="!isMobileView && list.showDelete" (click)="$event.stopPropagation(); deleteQuestionBank(list.id)">
