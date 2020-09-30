@@ -2,14 +2,14 @@
     Create New
 </button>
 <div *ngIf="questionList.length > 0">
-    <mat-card class="p-4 mb-3 text-capitalize text-selection-none" *ngFor="let list of questionList" (mouseover)="list.showDelete = true;"
-        (mouseleave)="list.showDelete = false">
+    <mat-card class="p-4 mb-3 text-capitalize text-selection-none" *ngFor="let list of questionList"
+        (mouseover)="list.showDelete = true;" (mouseleave)="list.showDelete = false">
         <button mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete"
             *ngIf="!isMobileView && list.showDelete" (click)="$event.stopPropagation(); deleteQuestionBank(list.id)">
             <mat-icon>delete_outline</mat-icon>
         </button>
-        <button mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete"
-            *ngIf="isMobileView" (click)="$event.stopPropagation(); deleteQuestionBank(list.id)">
+        <button mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete" *ngIf="isMobileView"
+            (click)="$event.stopPropagation(); deleteQuestionBank(list.id)">
             <mat-icon>delete_outline</mat-icon>
         </button>
         <h2 class="mb-0 title" (click)="navigateToQuestionBank(list.id)"> {{list.quizName || 'Quiz Name'}} </h2>
@@ -19,6 +19,10 @@
             <p class="mb-0">Total Marks : {{calculateTotalMarks(list)}}</p>
         </div>
     </mat-card>
+</div>
+
+<div *ngIf="questionList.length === 0">
+    <app-empty-state [message]="'No Data Available.'"></app-empty-state>
 </div>
 
 <app-spinner *ngIf="isLoading"></app-spinner>

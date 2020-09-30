@@ -18,6 +18,7 @@ import { AngularFireModule } from '@angular/fire';
 import { ConfirmDialogComponent } from './shared/components/app-confirm-dialog/app-confirm-dialog.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppSpinnerComponent } from './shared/components/app-spinner/app-spinner.component';
+import { AppEmptyStateComponent } from './shared/components/app-empty-state/app-empty-state.component';
 
 const FirebaseModules = [
   AngularFireModule.initializeApp(environment.firebase),
@@ -34,7 +35,8 @@ const FirebaseModules = [
     ConfirmDialogComponent,
     QuestionBankListComponent,
     AppSnackbarComponent,
-    AppSpinnerComponent
+    AppSpinnerComponent,
+    AppEmptyStateComponent
   ],
   imports: [
     BrowserModule,

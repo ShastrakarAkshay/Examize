@@ -26,6 +26,7 @@ export class QuestionBankListComponent implements OnInit {
 
   ngOnInit(): void {
     this._showSpinner();
+    this._alwaysShowDeleteButton();
     this._questionBankService.getAllQuestionBank().subscribe(res => {
       this.questionList = res.map((item) => {
         return { ...item.payload.doc.data(), showDelete: false, id: item.payload.doc.id };
@@ -36,7 +37,7 @@ export class QuestionBankListComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize() {
     this._alwaysShowDeleteButton();
   }
 

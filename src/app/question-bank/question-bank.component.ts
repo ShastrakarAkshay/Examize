@@ -2,13 +2,13 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Inject, Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CQuestionTypes } from '../question-types/question-type.constant';
 import { AppConfirmDialogService } from '../shared/services/app-confirm-dialog.service';
 import { AppSnackBarService } from '../shared/services/app-snackbar.service';
 import { QuestionBankService } from '../shared/services/question-bank.service';
 import { IQuestionBank, IQuizModal, IQuizSettings } from './interface/question-bank.interface';
+import { remove, size } from 'lodash';
 
 @Component({
   selector: 'app-question-bank',
@@ -78,7 +78,7 @@ export class QuestionBankComponent implements OnInit {
       readonly: false
     }
 
-    if (!_.size(this.quizData.questions)) {
+    if (!size(this.quizData.questions)) {
       this.quizData.questions.push(emptyQuestion);
     }
   }
@@ -94,7 +94,7 @@ export class QuestionBankComponent implements OnInit {
   }
 
   deleteQuestion(questionId: any) {
-    this.quizData.questions = _.remove(this.quizData.questions, (item) => item.id !== questionId);
+    this.quizData.questions = remove(this.quizData.questions, (item) => item.id !== questionId);
     this._initializeQuesitonBank();
   }
 
@@ -148,7 +148,7 @@ export class QuestionBankComponent implements OnInit {
 
   isQuestionValid(data: IQuestionBank): boolean {
     const invalidOptions = data.options.filter(option => option.name.trim() === "")
-    if (data.question.trim() === "" || _.size(invalidOptions) || !_.size(data.options)) {
+    if (data.question.trim() === "" || size(invalidOptions) || !size(data.options)) {
       return true;
     }
     return false;
@@ -169,15 +169,16 @@ export class QuestionBankComponent implements OnInit {
             }
           })
           // remove options that has blank option name
-          return { ...item, options: item.options.filter(option => option.name.trim() !== "") }
+          return { ...item, readonly: true, options: item.options.filter(option => option.name.trim() !== "") }
         })
 
         // remove question that has empty options array
         this.quizData.questions = filteredOptions.filter(item => item.options.length > 0);
 
 
-        if (!_.size(this.quizData.questions)) {
+        if (!size(this.quizData.questions)) {
           this._appSnackBarService.error('No data to save.');
+          this._hideSpinner();
         } else if (this.quizID) {
           // update
           this._questionBankService.updateQuestionBank(this.quizID, this.quizData).then(res => {
