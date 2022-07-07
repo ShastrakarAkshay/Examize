@@ -116,7 +116,7 @@ export class QuestionBankComponent implements OnInit {
     })
     this.quizData.questions.splice(index + 1, 0, emptyQuestion);
     if (index >= 0) {
-      const card = document.getElementById('card' + index);
+      const card = document.getElementById('question-card-' + index);
       card.scrollIntoView({ behavior: 'smooth' });
     }
   }

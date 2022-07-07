@@ -1,11 +1,11 @@
 <div class="row" *ngIf="data">
-    <div class="col-sm-12 pb-4" *ngIf="!data.readonly" cdkDropList (cdkDropListDropped)="dragDropOptions($event)">
-        <div *ngFor="let option of data.options" cdkDrag>
+    <div ak-attr="ak-write-multiple-choice" class="col-sm-12 pb-4" *ngIf="!data.readonly" cdkDropList (cdkDropListDropped)="dragDropOptions($event)">
+        <div *ngFor="let option of data.options;let i=index;" cdkDrag>
             <mat-radio-group [(ngModel)]="data.answerKey[0]">
                 <mat-radio-button cdkDragHandle color="primary" [value]="option.id"> </mat-radio-button>
             </mat-radio-group>
             <mat-form-field class="ml-2 w-90 option-input">
-                <input matInput [(ngModel)]="option.name">
+                <input id="{{'ak-option-'+i}}" matInput [(ngModel)]="option.name">
             </mat-form-field>
             <button mat-icon-button color="basic" class="float-right btn-hover" matTooltip="Remove"
                 (click)="removeOption(option.id)">
@@ -16,7 +16,7 @@
             <mat-radio-group>
                 <mat-radio-button disabled value=""> </mat-radio-button>
             </mat-radio-group>
-            <button mat-button color="primary" class="p-0 pl-2 pr-2" (click)="addOption()">Add Option</button>
+            <button ak-attr="ak-add-option-btn" mat-button color="primary" class="p-0 pl-2 pr-2" (click)="addOption()">Add Option</button>
         </div>
     </div>
     <div class="col-sm-12" *ngIf="data.readonly">
