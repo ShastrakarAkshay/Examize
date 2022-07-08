@@ -1,4 +1,4 @@
-<button ak-attr="btn-create-new" mat-raised-button color="basic" class="mb-3" (click)="navigateToQuestionBank(0)">
+<button ak-attr="btn-create-new" name="ak-btn-create-new" id="ak-btn-create-new" mat-raised-button color="basic" class="mb-3 ak-btn-create-new" (click)="navigateToQuestionBank(0)">
     Create New
 </button>
 <div *ngIf="questionList.length > 0">
@@ -8,11 +8,11 @@
             *ngIf="!isMobileView && list.showDelete" (click)="$event.stopPropagation(); deleteQuestionBank(list.id)">
             <mat-icon>delete_outline</mat-icon>
         </button>
-        <button mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete" *ngIf="isMobileView"
+        <button ak-attr="delete-question-bank" mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete" *ngIf="isMobileView"
             (click)="$event.stopPropagation(); deleteQuestionBank(list.id)">
             <mat-icon>delete_outline</mat-icon>
         </button>
-        <h2 class="mb-0 title" (click)="navigateToQuestionBank(list.id)"> {{list.quizName || 'Quiz Name'}} </h2>
+        <h2 class="mb-0 title" ak-attr="ak-quiz-name-action" id="ak-quiz-name-action" (click)="navigateToQuestionBank(list.id)"> {{list.quizName || 'Quiz Name'}} </h2>
         <p class="mb-0 text-secondary"> {{list.quizDescription || 'Desciption'}} </p>
         <div class="mat-content mt-3 text-secondary">
             <p class="mb-0">Total Questions : {{list.questions.length}}</p>
