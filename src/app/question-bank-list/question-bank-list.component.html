@@ -1,9 +1,9 @@
-<button mat-raised-button color="basic" class="mb-3" (click)="navigateToQuestionBank(0)">
+<button ak-attr="btn-create-new" mat-raised-button color="basic" class="mb-3" (click)="navigateToQuestionBank(0)">
     Create New
 </button>
 <div *ngIf="questionList.length > 0">
-    <mat-card class="p-4 mb-3 text-capitalize text-selection-none" *ngFor="let list of questionList"
-        (mouseover)="list.showDelete = true;" (mouseleave)="list.showDelete = false">
+    <mat-card class="p-4 mb-3 text-capitalize text-selection-none" *ngFor="let list of questionList; let i=index;"
+        (mouseover)="list.showDelete = true;" (mouseleave)="list.showDelete = false" id="{{'question-bank-'+i}}">
         <button mat-icon-button color="basic" class="btn-hover btn-delete" matTooltip="Delete"
             *ngIf="!isMobileView && list.showDelete" (click)="$event.stopPropagation(); deleteQuestionBank(list.id)">
             <mat-icon>delete_outline</mat-icon>
