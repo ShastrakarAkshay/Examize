@@ -15,8 +15,8 @@
         <h2 class="mb-0 title" ak-attr="ak-quiz-name-action" id="ak-quiz-name-action" (click)="navigateToQuestionBank(list.id)"> {{list.quizName || 'Quiz Name'}} </h2>
         <p class="mb-0 text-secondary"> {{list.quizDescription || 'Desciption'}} </p>
         <div class="mat-content mt-3 text-secondary">
-            <p class="mb-0">Total Questions : {{list.questions.length}}</p>
-            <p class="mb-0">Total Marks : {{calculateTotalMarks(list)}}</p>
+            <p class="mb-0" ak-attr="ak-total-question" id="ak-total-question">Total Questions : {{list.questions.length}}</p>
+            <p class="mb-0" ak-attr="ak-total-marks" id="ak-total-marks">Total Marks : {{calculateTotalMarks(list)}}</p>
         </div>
     </mat-card>
 </div>
