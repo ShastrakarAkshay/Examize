@@ -51,10 +51,10 @@
                         </mat-form-field>
                     </div>
                     <div class="col-sm-5">
-                        <mat-form-field appearance="fill" class="w-100">
+                        <mat-form-field appearance="fill" class="w-100" ak-attr="question-type-list">
                             <mat-label>Question Type</mat-label>
                             <mat-select ak-attr="ak-question-type-list" matNativeControl [(ngModel)]="data.questionType" (selectionChange)="questionTypeChanged($event, data)">
-                                <mat-option ak-attr="ak-question-type-option" *ngFor="let option of questionType" [value]="option.id">
+                                <mat-option ak-attr="ak-question-type-option" *ngFor="let option of questionType" [value]="option.id" [name]="option.name">
                                     <i class="mr-2" [ngClass]="option.iconClass"></i>
                                     {{option.name}}
                                 </mat-option>
