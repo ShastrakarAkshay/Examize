@@ -32,4 +32,9 @@ export class MultipleChoiceComponent implements OnInit {
     moveItemInArray(this.data.options, event.previousIndex, event.currentIndex);
   }
 
+  _removeOption(optionId: any) {
+    this.data.options = _.remove(this.data.options, (item) => item.id !== optionId);
+    this.data.answerKey = this.data.answerKey.filter((key) => key !== optionId);
+  }
+  
 }
